@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>منصة مشرف القيادة المدرسية</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g:#006C35;--g2:#0a8a4b;--gd:#004d26;--gold:#C9A227;--gold2:#f3e6b8;--bg:#f3f5f2;--card:#fff;--ink:#1c2a22;--mut:#6b7a72;--line:#e3e8e4;
+--l4:#0a7a3f;--l3:#7cb342;--l2:#e0a100;--l1:#c0392b;--na:#b8c2bc;--r:16px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Tajawal,system-ui,sans-serif;font-size:15px}
+button,input,select,textarea{font-family:inherit;font-size:15px}
+.hdr{background:linear-gradient(135deg,var(--gd),var(--g) 55%,var(--g2));color:#fff;padding:16px 16px 54px;position:relative;overflow:hidden}
+.hdr:after{content:"";position:absolute;left:-60px;top:-60px;width:220px;height:220px;border-radius:50%;border:28px solid rgba(201,162,39,.18)}
+.hdr h1{margin:0;font-size:20px;font-weight:800}
+.hdr .sub{opacity:.85;font-size:13px;margin-top:4px}
+.hdr .yr{position:absolute;left:14px;top:14px;z-index:2;display:flex;gap:6px;align-items:center}
+.hdr .yr select{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:10px;padding:4px 8px}
+.hdr .yr select option{color:#000}
+.nav{position:sticky;top:0;z-index:20;margin:-40px 10px 0;background:#fff;border-radius:14px;box-shadow:0 6px 20px rgba(0,60,30,.12);display:flex;overflow-x:auto;scrollbar-width:none;padding:6px}
+.nav::-webkit-scrollbar{display:none}
+.nav button{flex:0 0 auto;border:0;background:none;padding:9px 13px;border-radius:10px;color:var(--mut);font-weight:700;white-space:nowrap}
+.nav button.on{background:var(--g);color:#fff}
+main{padding:14px 12px 90px;max-width:1100px;margin:auto}
+.card{background:var(--card);border-radius:var(--r);padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.05);border:1px solid var(--line)}
+.card h2{margin:0 0 10px;font-size:16px;display:flex;align-items:center;gap:8px}
+.card h2:before{content:"";width:5px;height:18px;border-radius:3px;background:var(--gold)}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px}
+@media(min-width:760px){.kpis{grid-template-columns:repeat(4,1fr)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}}
+.kpi{background:#fff;border-radius:var(--r);padding:12px;border:1px solid var(--line);position:relative;overflow:hidden}
+.kpi .v{font-size:26px;font-weight:800;color:var(--g)}
+.kpi .t{font-size:12.5px;color:var(--mut)}
+.kpi .s{font-size:11.5px;color:var(--mut);margin-top:2px}
+.kpi:after{content:"";position:absolute;inset:auto 0 0 0;height:3px;background:var(--gold)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sp{flex:1}
+.btn{border:0;background:var(--g);color:#fff;padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer}
+.btn.o{background:#fff;color:var(--g);border:1.5px solid var(--g)}
+.btn.gold{background:var(--gold);color:#2a2100}
+.btn.red{background:#fff;color:var(--l1);border:1.5px solid #f0c7c2}
+.btn.sm{padding:6px 10px;font-size:13px;border-radius:9px}
+.btn:disabled{opacity:.5}
+label.f{display:block;font-size:12.5px;color:var(--mut);margin:10px 0 4px;font-weight:700}
+input.i,select.i,textarea.i{width:100%;border:1.5px solid var(--line);border-radius:11px;padding:10px;background:#fbfcfb;color:var(--ink)}
+textarea.i{min-height:74px;resize:vertical}
+input.i:focus,select.i:focus,textarea.i:focus{outline:none;border-color:var(--g)}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.fg .full{grid-column:1/-1}
+.bars .b{display:grid;grid-template-columns:minmax(90px,38%) 1fr 46px;gap:8px;align-items:center;margin:7px 0;font-size:13px}
+.bars .lb{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trk{height:12px;background:#eef2ef;border-radius:8px;overflow:hidden;position:relative}
+.trk i{display:block;height:100%;border-radius:8px}
+.trk .mk{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);opacity:.55}
+.bars .vv{font-weight:800;text-align:left;font-size:13px}
+.multi .trk{height:8px;margin:2px 0}
+.badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11.5px;font-weight:800;color:#fff;white-space:nowrap}
+.l4{background:var(--l4)}.l3{background:var(--l3)}.l2{background:var(--l2)}.l1{background:var(--l1)}.na{background:var(--na)}
+.c4{color:var(--l4)}.c3{color:#5a8f2a}.c2{color:#b27f00}.c1{color:var(--l1)}
+.list .it{border:1px solid var(--line);border-radius:14px;padding:11px;margin-bottom:9px;background:#fff;cursor:pointer}
+.list .it .t1{font-weight:800}
+.list .it .t2{font-size:12.5px;color:var(--mut);margin-top:3px}
+.muted{color:var(--mut);font-size:13px}
+.empty{text-align:center;color:var(--mut);padding:24px 8px}
+.tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px}
+.tbl th{background:var(--g);color:#fff;padding:8px 6px;font-weight:700;position:sticky;top:0}
+.tbl th:first-child{border-top-right-radius:10px}.tbl th:last-child{border-top-left-radius:10px}
+.tbl td{padding:7px 6px;border-bottom:1px solid var(--line);text-align:center}
+.tbl td.nm{text-align:right;font-weight:700;white-space:nowrap;position:sticky;right:0;background:#fff}
+.scx{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.hm{border-radius:7px;padding:5px 3px;font-weight:800;color:#fff;min-width:42px;display:inline-block}
+.rate{display:flex;gap:4px;margin-top:6px}
+.rate button{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:9px;padding:7px 0;font-weight:800;color:var(--mut)}
+.rate button.on4{background:var(--l4);color:#fff;border-color:var(--l4)}
+.rate button.on3{background:var(--l3);color:#fff;border-color:var(--l3)}
+.rate button.on2{background:var(--l2);color:#fff;border-color:var(--l2)}
+.rate button.on1{background:var(--l1);color:#fff;border-color:var(--l1)}
+.rate button.on0{background:#888;color:#fff;border-color:#888}
+.ritem{padding:10px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+.dom{margin-top:12px;font-weight:800;color:var(--g);display:flex;justify-content:space-between}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.chips button{flex:0 0 auto;border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:6px 12px;font-weight:700;color:var(--mut);font-size:13px}
+.chips button.on{border-color:var(--g);background:#e8f3ec;color:var(--g)}
+.gap{border-right:5px solid var(--l2);background:#fff;border-radius:12px;padding:10px 12px;margin-bottom:8px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);border-left:1px solid var(--line)}
+.gap.h{border-right-color:var(--l1)}.gap.m{border-right-color:var(--l2)}.gap.lw{border-right-color:#9ab}
+.gap .rec{font-size:12.5px;background:#f6faf7;border-radius:9px;padding:6px 8px;margin-top:6px;color:#2d4a3a}
+.modal{position:fixed;inset:0;background:rgba(10,30,20,.45);z-index:50;display:none;align-items:flex-end;justify-content:center}
+.modal.on{display:flex}
+.sheet{background:#fff;width:100%;max-width:760px;max-height:94vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px 14px 30px;animation:up .22s ease}
+@media(min-width:760px){.modal{align-items:center}.sheet{border-radius:20px}}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+.sheet .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;position:sticky;top:-16px;background:#fff;padding:6px 0;z-index:2}
+.sheet .sh b{font-size:17px}
+.x{border:0;background:#eef2ef;width:34px;height:34px;border-radius:50%;font-size:18px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#123;color:#fff;padding:10px 18px;border-radius:12px;z-index:99;display:none;font-weight:700}
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(160deg,var(--gd),var(--g) 60%,var(--g2))}
+.login .box{background:#fff;border-radius:22px;padding:26px 20px;width:100%;max-width:380px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.login .logo{width:66px;height:66px;border-radius:18px;background:var(--gold2);color:var(--g);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:30px;font-weight:800}
+.pin{letter-spacing:10px;text-align:center;font-size:24px!important;font-weight:800}
+.demo{background:var(--gold2);color:#5a4500;font-size:12.5px;padding:7px 12px;text-align:center;font-weight:700}
+.credit{text-align:center;color:var(--mut);font-size:11.5px;margin:20px 0 6px}
+.score-ring{width:92px;height:92px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;font-weight:800;flex:0 0 auto}
+.score-ring b{font-size:24px}.score-ring span{font-size:11px;opacity:.9}
+.note-st{font-size:11.5px;padding:2px 8px;border-radius:12px;font-weight:800}
+.st-open{background:#fde8e6;color:var(--l1)}.st-prog{background:#fff3d6;color:#9a6c00}.st-done{background:#e3f3e9;color:var(--l4)}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin:6px 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:middle;margin-left:4px}
+.loading{position:fixed;inset:0;background:rgba(255,255,255,.6);z-index:98;display:none;align-items:center;justify-content:center}
+.loading.on{display:flex}
+.spin{width:42px;height:42px;border-radius:50%;border:4px solid #d6e6dc;border-top-color:var(--g);animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+#print{display:none}
+@media print{
+  body>*:not(#print){display:none!important}
+  #print{display:block;font-size:12.5px;color:#000}
+  @page{size:A4;margin:12mm}
+}
+.pr-h{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px double var(--g);padding-bottom:8px;margin-bottom:10px;font-size:12px;line-height:1.6}
+.pr-t{text-align:center;font-size:18px;font-weight:800;color:var(--g);margin:6px 0 10px}
+.pr table{width:100%;border-collapse:collapse;margin:6px 0 10px;font-size:12px}
+.pr td,.pr th{border:1px solid #9aa;padding:5px 6px}
+.pr th{background:#e8f1ec}
+.pr .sec{font-weight:800;color:var(--g);margin:12px 0 4px;border-bottom:1px solid #cdd;padding-bottom:3px}
+.pr .box{border:1px solid #9aa;min-height:40px;padding:6px;border-radius:4px;white-space:pre-wrap}
+.pr .sig{display:flex;justify-content:space-around;margin-top:28px;text-align:center}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+<div class="loading" id="loading"><div class="spin"></div></div>
+<div id="print"></div>
+<script>
+/* ===== الإعدادات الافتراضية (تُحقن عند البناء) ===== */
+const DEFAULTS = {"settings": {"appTitle": "منصة مشرف القيادة المدرسية", "supName": "اسم المشرف", "supTitle": "مشرف القيادة المدرسية", "region": "الإدارة العامة للتعليم بمنطقة المدينة المنورة", "office": "مكتب التعليم", "year": "1448", "wVisit": "30", "wNafs": "40", "wInd": "30", "gapThr": "10", "target": "80", "pin": "1234", "visitTarget": "2"}, "items": [["القيادة والإدارة المدرسية", "وضوح الرؤية والرسالة وتفعيل الخطة التشغيلية ومتابعة مؤشراتها"], ["القيادة والإدارة المدرسية", "تشكيل اللجان والمجالس المدرسية وتفعيلها بمحاضر موثقة"], ["القيادة والإدارة المدرسية", "متابعة الانضباط المدرسي (حضور الطلاب والمعلمين والتأخر)"], ["القيادة والإدارة المدرسية", "تفعيل نظام نور والأنظمة الإلكترونية وجودة التوثيق والسجلات"], ["القيادة والإدارة المدرسية", "إدارة الموارد والميزانية التشغيلية والعهد المدرسية"], ["التعليم والتعلم", "تنفيذ الزيارات الصفية وتقييم أداء المعلمين وفق الدليل الإجرائي"], ["التعليم والتعلم", "تفعيل مجتمعات التعلم المهنية والتطوير المهني للمعلمين"], ["التعليم والتعلم", "تفعيل منصة مدرستي وتوظيف التقنية في التعليم"], ["التعليم والتعلم", "تنفيذ الخطط العلاجية والإثرائية ومتابعة أثرها"], ["نواتج التعلم", "تحليل نتائج نافس والاختبارات التشخيصية وبناء خطط التحسين"], ["نواتج التعلم", "متابعة مستويات الطلاب ونسب التمكن في المواد الأساسية"], ["نواتج التعلم", "رعاية الموهوبين وذوي الإعاقة والطلاب المتعثرين"], ["البيئة المدرسية والشراكة", "تطبيق اشتراطات الأمن والسلامة وخطط الإخلاء"], ["البيئة المدرسية والشراكة", "سلامة البيئة الصفية والمرافق والنظافة والمقصف"], ["البيئة المدرسية والشراكة", "التواصل مع الأسرة والشراكة المجتمعية"], ["البيئة المدرسية والشراكة", "تفعيل التوجيه الطلابي والنشاط وبرامج السلوك والمواظبة"]], "indDefs": [["نسبة حضور الطلاب", "95", "أعلى", "%", "1"], ["نسبة انضباط المعلمين", "97", "أعلى", "%", "1"], ["نسبة الغياب بدون عذر", "3", "أقل", "%", "1"], ["نسبة إنجاز الخطة التشغيلية", "90", "أعلى", "%", "1"], ["نسبة تفعيل منصة مدرستي", "90", "أعلى", "%", "1"], ["نسبة تنفيذ الخطط العلاجية", "90", "أعلى", "%", "1"], ["نسبة رضا المستفيدين", "85", "أعلى", "%", "1"]]};
+const FB_CONFIG = /*__FBCONFIG__*/null;
+const FB = !!FB_CONFIG;
+const FB_RULES = "rules_version = '2';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n\n    function signed()  { return request.auth != null; }\n    function uref()    { return /databases/$(database)/documents/users/$(request.auth.uid); }\n    function active()  { return signed() && exists(uref()) && get(uref()).data.active != 'لا'; }\n    function isAdmin() { return active() && get(uref()).data.role == 'admin'; }\n    function mine(sid) { return active() && sid in get(uref()).data.schoolIds; }\n    function ownerRef(){ return /databases/$(database)/documents/config/owner; }\n\n    // أول حساب مشرف قيادة (مرة واحدة فقط)\n    match /config/owner {\n      allow read: if true;\n      allow create: if signed() && !exists(ownerRef()) && request.resource.data.uid == request.auth.uid;\n    }\n    match /config/main {\n      allow read: if active();\n      allow write: if isAdmin();\n    }\n\n    match /users/{uid} {\n      allow read: if isAdmin() || (signed() && request.auth.uid == uid);\n      allow create: if isAdmin() || (signed() && request.auth.uid == uid && !exists(ownerRef())\n                    && getAfter(ownerRef()).data.uid == uid && request.resource.data.role == 'admin');\n      allow update, delete: if isAdmin();\n    }\n\n    match /schools/{id} {\n      allow read: if isAdmin() || mine(id);\n      allow write: if isAdmin();\n    }\n\n    // الزيارات: المشرف الزائر يدير زياراته فقط في مدارسه\n    match /visits/{id} {\n      allow read: if isAdmin() || mine(resource.data.schoolId);\n      allow create: if isAdmin() || (mine(request.resource.data.schoolId) && request.resource.data.visitorId == request.auth.uid);\n      allow update: if isAdmin() || (mine(resource.data.schoolId) && resource.data.visitorId == request.auth.uid\n                    && mine(request.resource.data.schoolId) && request.resource.data.visitorId == request.auth.uid);\n      allow delete: if isAdmin() || (mine(resource.data.schoolId) && resource.data.visitorId == request.auth.uid);\n    }\n\n    // الملاحظات ونتائج نافس وقيم المؤشرات: لمدارس المستخدم فقط\n    match /{col}/{id} {\n      function ok() { return col in ['notes', 'nafs', 'indVals']; }\n      allow read: if ok() && (isAdmin() || mine(resource.data.schoolId));\n      allow create: if ok() && (isAdmin() || mine(request.resource.data.schoolId));\n      allow update: if ok() && (isAdmin() || (mine(resource.data.schoolId) && mine(request.resource.data.schoolId)));\n      allow delete: if ok() && (isAdmin() || mine(resource.data.schoolId));\n    }\n  }\n}\n";
+const DEMO = !FB && (typeof google === 'undefined' || !google.script);
+const MINPW = FB ? 6 : 4;
+const APP_URL = /*__URL__*/'';
+const GRADES = {'الثالث الابتدائي':['القراءة','الرياضيات'],'السادس الابتدائي':['القراءة','الرياضيات','العلوم'],'الثالث المتوسط':['القراءة','الرياضيات','العلوم']};
+const VTYPES = ['زيارة إشرافية شاملة','زيارة متابعة','زيارة دعم وتمكين','زيارة مفاجئة','زيارة افتراضية'];
+const RATES = [[4,'عالٍ'],[3,'متحقق'],[2,'جزئي'],[1,'غير متحقق'],[0,'لا ينطبق']];
+let PIN = '', DB = null, S = {tab:'home', year:'', vf:'', nf:{st:'open', sc:''}, nafsSc:'', indSc:'', gapSc:'', cmpA:'', cmpB:'', rep:'', vv:''};
+let LOCAL = null; // قاعدة بيانات وضع المعاينة
+let ME = {id:'',name:'',role:'admin'};
+const isAdmin = () => ME.role==='admin';
+const ROLES = {admin:'مشرف القيادة (الإدارة)', visitor:'مشرف زائر'};
+const canEdit = v => isAdmin() || (v && v.visitorId===ME.id);
+
+/* ===== أدوات ===== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num = v => { if(v===''||v==null) return null; const n = parseFloat(String(v).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(',','.')); return isNaN(n)?null:n; };
+const avg = a => { const b = a.filter(x => x!=null && !isNaN(x)); return b.length ? b.reduce((s,x)=>s+x,0)/b.length : null; };
+const f0 = v => v==null ? '—' : (Math.round(v*10)/10).toString();
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+const today = () => new Date().toISOString().slice(0,10);
+function toast(t){ const e=$('#toast'); e.textContent=t; e.style.display='block'; clearTimeout(e._t); e._t=setTimeout(()=>e.style.display='none',2400); }
+function busy(on){ $('#loading').classList.toggle('on', !!on); }
+function lvl(v){ if(v==null||isNaN(v)) return {t:'لا توجد بيانات',c:'na',col:'var(--na)'}; if(v>=85) return {t:'متميز',c:'l4',col:'var(--l4)'}; if(v>=75) return {t:'متقدم',c:'l3',col:'var(--l3)'}; if(v>=60) return {t:'متوسط',c:'l2',col:'var(--l2)'}; return {t:'يحتاج دعم',c:'l1',col:'var(--l1)'}; }
+const badge = v => { const l=lvl(v); return `<span class="badge ${l.c}">${l.t}</span>`; };
+const hm = v => `<span class="hm" style="background:${lvl(v).col}">${f0(v)}</span>`;
+function set(k){ return DB.settings[k]!=null && DB.settings[k]!=='' ? DB.settings[k] : (DEFAULTS.settings[k]||''); }
+
+/* ===== الاتصال بالخادم ===== */
+function call(action, payload){
+  return new Promise((res, rej) => {
+    if (FB){ window.FBA.call(action, payload).then(res).catch(e=>rej(fbErr(e))); return; }
+    if (DEMO){ try{ res(demoApi(action, payload)); }catch(e){ rej(e.message||e); } return; }
+    google.script.run.withSuccessHandler(r => r && r.error ? rej(r.error) : res(r))
+      .withFailureHandler(e => rej(e && e.message || e)).api(PIN, action, payload || null);
+  });
+}
+async function run(ops, msg){
+  busy(true);
+  try{ const r = await call('batch', ops); load(r.db); render(); if(msg) toast(msg); return true; }
+  catch(e){ toast('خطأ: ' + e); return false; }
+  finally{ busy(false); }
+}
+function load(db){
+  DB = db; ME = DB.me || ME; DB.users = DB.users || [];
+  DB.visits.forEach(v => { try{ v.ratings = typeof v.ratings==='string' ? JSON.parse(v.ratings||'[]') : (v.ratings||[]); }catch(e){ v.ratings=[]; } v.score = num(v.score); });
+  DB.nafs.forEach(n => { n.score = num(n.score); n.national = num(n.national); });
+  DB.indVals.forEach(n => n.value = num(n.value));
+  DB.indDefs.forEach(d => { d.target = num(d.target); d.weight = num(d.weight)||1; });
+  DB.schools.sort((a,b)=>String(a.name).localeCompare(String(b.name),'ar'));
+  if(!S.year) S.year = String(set('year'));
+}
+
+/* ===== وضع المعاينة (بدون خادم) ===== */
+function demoApi(action, p){
+  if(!LOCAL){ LOCAL = {settings:Object.assign({},DEFAULTS.settings), schools:[], visits:[], notes:[], nafs:[], indVals:[],
+    indDefs:DEFAULTS.indDefs.map(r=>({name:r[0],target:r[1],dir:r[2],unit:r[3],weight:r[4]})), items:DEFAULTS.items.map(r=>({domain:r[0],item:r[1]})), users:[]};
+    applyOps(LOCAL, demoData()); }
+  const pin = String(action==='login' ? p.pin : PIN);
+  let u = demoUser(pin);
+  if(action==='batch'){ applyOps(LOCAL, p, u); const np=(p.find(o=>o.op==='myPin')||{}).pin || (p.find(o=>o.op==='settings'&&o.obj.pin&&u.master)||{obj:{}}).obj.pin; if(np) u=demoUser(np); }
+  return {db:viewFor(LOCAL,u)};
+}
+function demoUser(pin){
+  if(pin===String(LOCAL.settings.pin)) return {id:'admin',name:LOCAL.settings.supName,role:'admin',schools:'*',master:true};
+  const u=LOCAL.users.find(x=>String(x.pin)===pin && x.active!=='لا'); if(!u) throw new Error('رمز الدخول غير صحيح'); return u;
+}
+function viewFor(D,u){
+  const c = JSON.parse(JSON.stringify(D)); delete c.settings.pin;
+  const A = (u.role==='admin'||u.schools==='*') ? null : String(u.schools||'').split(',').map(x=>x.trim());
+  if(A){ c.schools=c.schools.filter(x=>A.includes(x.id)); ['visits','notes','nafs','indVals'].forEach(k=>c[k]=c[k].filter(x=>A.includes(x.schoolId))); }
+  if(u.role!=='admin') c.users=[];
+  c.me={id:u.id,name:u.name,role:u.role,master:!!u.master}; return c;
+}
+function applyOps(D, ops, u){
+  ops.forEach(o => {
+    const t = D[o.t];
+    if(o.op==='myPin'){ D.users.forEach(x=>{ if(u&&x.id===u.id) x.pin=o.pin; }); return; }
+    if(o.t==='visits'&&o.op==='upsert'&&u&&u.role!=='admin'){ o.obj.visitorId=u.id; o.obj.visitorName=u.name; }
+    if(o.op==='upsert'){ const i=t.findIndex(x=>x.id===o.obj.id); const ob=Object.assign({},o.obj); if(ob.ratings && typeof ob.ratings!=='string') ob.ratings=JSON.stringify(ob.ratings); i>=0? t[i]=ob : t.push(ob); }
+    else if(o.op==='remove'){ D[o.t] = t.filter(x=>x.id!==o.id); }
+    else if(o.op==='removeWhere'){ D[o.t] = t.filter(x=>!Object.keys(o.match).every(k=>String(x[k])===String(o.match[k]))); }
+    else if(o.op==='replace'){ D[o.t] = t.filter(x=>!Object.keys(o.match).every(k=>String(x[k])===String(o.match[k]))).concat(o.rows); }
+    else if(o.op==='setList'){ D[o.t] = o.rows; }
+    else if(o.op==='settings'){ Object.keys(o.obj).forEach(k=>{ if(k!=='pin'||o.obj[k]) D.settings[k]=o.obj[k]; }); }
+    else if(o.op==='clearDemo'){ ['schools','visits','notes','nafs','indVals','users'].forEach(k=> D[k]=D[k].filter(x=>!String(x.id).startsWith('demo') && !String(x.schoolId||'').startsWith('demo'))); }
+  });
+}
+function demoData(){
+  let seed = 7; const rnd = () => (seed = (seed*9301+49297)%233280)/233280;
+  const names = ['مدرسة تجريبية (أ) الابتدائية','مدرسة تجريبية (ب) الابتدائية','مدرسة تجريبية (ج) الابتدائية','مدرسة تجريبية (د) الابتدائية','مدرسة تجريبية (هـ) الابتدائية','مدرسة تجريبية (و) الابتدائية'];
+  const q = [0.92,0.8,0.68,0.85,0.55,0.74]; const ops=[]; const y = String(DEFAULTS.settings.year);
+  const items = DEFAULTS.items, defs = DEFAULTS.indDefs;
+  const vis=[{id:'demoU1',name:'المشرف الزائر (1)',role:'visitor',pin:'1111',schools:'demo0,demo1,demo2',phone:'',active:'نعم'},{id:'demoU2',name:'المشرف الزائر (2)',role:'visitor',pin:'2222',schools:'demo3,demo4,demo5',phone:'',active:'نعم'}];
+  vis.forEach(u=>ops.push({op:'upsert',t:'users',obj:u}));
+  names.forEach((nm,k)=>{
+    const id='demo'+k; ops.push({op:'upsert',t:'schools',obj:{id,name:nm,ministryNo:String(40100+k*13),stage:'ابتدائي',principal:'مدير المدرسة',phone:'05xxxxxxxx',students:String(400+Math.round(rnd()*600)),district:'القطاع '+(k%3+1)}});
+    for(let v=0; v<(k===5?1:2); v++){
+      const ratings = items.map(r=>({d:r[0],i:r[1],s:Math.max(1,Math.min(4,Math.round(q[k]*4 + (rnd()-0.5)*1.6)))}));
+      const vid='demoV'+k+v; const sc = ratings.reduce((s,r)=>s+r.s,0)/(ratings.length*4)*100;
+      ops.push({op:'upsert',t:'visits',obj:{id:vid,year:y,date:`2026-${v?'11':'09'}-${String(5+k*3).padStart(2,'0')}`,schoolId:id,schoolName:nm,type:VTYPES[v],purpose:v?'متابعة توصيات الزيارة السابقة':'زيارة إشرافية شاملة لمجالات العمل المدرسي',ratings:JSON.stringify(ratings),score:sc.toFixed(1),strengths:'تفعيل اللجان المدرسية، وانتظام اليوم الدراسي.',notes:'الحاجة إلى تعزيز تحليل النتائج وربطه بالخطط العلاجية.',recs:'بناء خطة تحسين لنتائج نافس، وتفعيل مجتمعات التعلم في الرياضيات.',followDate:`2026-12-${String(1+k*4).padStart(2,'0')}`,status:'مكتملة',visitorId:vis[k<3?0:1].id,visitorName:vis[k<3?0:1].name}});
+      if(q[k]<0.8) ops.push({op:'upsert',t:'notes',obj:{id:'demoN'+k+v,visitId:vid,schoolId:id,schoolName:nm,domain:v?'نواتج التعلم':'التعليم والتعلم',text:v?'ضعف نسب التمكن في الرياضيات للصف السادس':'عدم انتظام الزيارات الصفية لبعض المعلمين',priority:v?'عالية':'متوسطة',owner:'مدير المدرسة',due:`2026-${v?'12-15':'11-10'}`,status:v?'مفتوحة':'قيد التنفيذ',closedDate:''}});
+    }
+    ['1447',y].forEach((yy,yi)=>{ Object.keys(GRADES).slice(0,2).forEach(g=>GRADES[g].forEach(sb=>{
+      const nat = {القراءة:68,الرياضيات:61,العلوم:63}[sb];
+      ops.push({op:'upsert',t:'nafs',obj:{id:'demoF'+k+yi+g.length+sb.length,schoolId:id,schoolName:nm,year:yy,grade:g,subject:sb,score:(nat*q[k]*1.25 + (rnd()-0.5)*10 + yi*3).toFixed(1),national:String(nat)}});
+    })); });
+    defs.forEach((d,j)=>{ const t=num(d[1]); const val = d[2]==='أقل' ? t/(q[k]+0.05) : t*(0.75+q[k]*0.27) ; ops.push({op:'upsert',t:'indVals',obj:{id:'demoI'+k+j,schoolId:id,schoolName:nm,year:y,name:d[0],value:Math.min(100,val).toFixed(1)}}); });
+  });
+  return ops;
+}
+
+/* ===== محرك الحساب ===== */
+const domains = () => [...new Set(DB.items.map(x=>x.domain))];
+const sName = id => (DB.schools.find(s=>s.id===id)||{}).name || '—';
+const yVisits = sid => DB.visits.filter(v=>String(v.year)===S.year && (!sid || v.schoolId===sid));
+function vPct(r){ const a=(r||[]).filter(x=>x.s>0); return a.length ? a.reduce((s,x)=>s+x.s,0)/(a.length*4)*100 : null; }
+const visitScore = sid => avg(yVisits(sid).map(v=>v.score));
+function domainScore(sid, d){ return avg(yVisits(sid).map(v=>vPct(v.ratings.filter(r=>r.d===d)))); }
+function nafsYear(sid){ const ys = DB.nafs.filter(n=>n.schoolId===sid && Number(n.year)<=Number(S.year)).map(n=>Number(n.year)); return ys.length ? String(Math.max(...ys)) : null; }
+function nafsRow(sid,g,sb,yr){ yr = yr || nafsYear(sid); return DB.nafs.find(n=>n.schoolId===sid && String(n.year)===yr && n.grade===g && n.subject===sb); }
+function nafsScore(sid){ const y=nafsYear(sid); return y ? avg(DB.nafs.filter(n=>n.schoolId===sid && String(n.year)===y).map(n=>n.score)) : null; }
+function indVal(sid,name){ const r=DB.indVals.find(x=>x.schoolId===sid && String(x.year)===S.year && x.name===name); return r ? r.value : null; }
+function ach(d, v){ if(v==null || !d.target) return null; if(d.dir==='أقل') return v<=0 ? 100 : Math.min(100, d.target/v*100); return Math.min(100, v/d.target*100); }
+function indScore(sid){ let s=0,w=0; DB.indDefs.forEach(d=>{ const a=ach(d, indVal(sid,d.name)); if(a!=null){ s+=a*d.weight; w+=d.weight; } }); return w ? s/w : null; }
+function composite(sid){
+  const parts=[[visitScore(sid),num(set('wVisit'))||0],[nafsScore(sid),num(set('wNafs'))||0],[indScore(sid),num(set('wInd'))||0]];
+  let s=0,w=0; parts.forEach(([v,ww])=>{ if(v!=null && ww>0){ s+=v*ww; w+=ww; } }); return w ? s/w : null;
+}
+function nafsCombos(){ const m=new Map(); DB.nafs.forEach(n=>{ const k=n.grade+'|'+n.subject; if(!m.has(k)) m.set(k,{g:n.grade,s:n.subject}); }); const order=Object.keys(GRADES); return [...m.values()].sort((a,b)=>order.indexOf(a.g)-order.indexOf(b.g)); }
+const shortG = g => g.replace('الابتدائي','ابتدائي').replace('الثالث','ثالث').replace('السادس','سادس').replace('المتوسط','متوسط');
+function dims(){
+  const d=[];
+  domains().forEach(x=>d.push({cat:'الزيارات',label:x,val:sid=>domainScore(sid,x),ref:()=>num(set('target'))}));
+  nafsCombos().forEach(c=>d.push({cat:'نافس',label:`${c.s} – ${shortG(c.g)}`,g:c.g,s:c.s,val:sid=>{const r=nafsRow(sid,c.g,c.s);return r?r.score:null;},ref:sid=>{const r=nafsRow(sid,c.g,c.s);return r&&r.national!=null?r.national:num(set('target'));}}));
+  DB.indDefs.forEach(x=>d.push({cat:'المؤشرات',label:x.name,def:x,val:sid=>ach(x,indVal(sid,x.name)),raw:sid=>indVal(sid,x.name),ref:()=>100}));
+  return d;
+}
+const meanOf = fn => avg(DB.schools.map(s=>fn(s.id)));
+function gapsFor(sid){
+  const thr = num(set('gapThr'))||10, out=[];
+  dims().forEach(dm=>{
+    const v=dm.val(sid); if(v==null) return;
+    const m=meanOf(dm.val), ref=dm.ref(sid), gm = m==null?0:v-m, gr = ref==null?0:v-ref;
+    let sev=null;
+    if(v<60 || gm<=-2*thr) sev='h'; else if(gm<=-thr || gr<=-10) sev='m'; else if(gr<0) sev='lw';
+    if(sev) out.push({dm,v,m,ref,gm,gr,sev});
+  });
+  const o={h:0,m:1,lw:2}; return out.sort((a,b)=>o[a.sev]-o[b.sev] || a.v-b.v);
+}
+function recFor(g){
+  const d=g.dm;
+  if(d.cat==='نافس') return `بناء خطة علاجية مركزة في ${d.s} لطلاب ${d.g}، وتطبيق اختبارات محاكية دورية، وتفعيل مجتمع تعلم مهني لمعلمي المادة، والاستفادة من ممارسات المدرسة الأعلى أداءً.`;
+  if(d.cat==='الزيارات') return `جدولة زيارة دعم وتمكين في مجال «${d.label}» خلال أسبوعين، ومراجعة الشواهد مع قائد المدرسة، وتحديد إجراءات تحسين بمسؤوليات وتواريخ.`;
+  return `متابعة مؤشر «${d.label}» أسبوعياً، وتحليل أسبابه مع فريق المدرسة، ووضع مستهدف مرحلي قابل للقياس حتى بلوغ المستهدف (${f0(d.def.target)}${esc(d.def.unit||'')}).`;
+}
+function spreads(){
+  return dims().map(dm=>{ const vals=DB.schools.map(s=>({s,v:dm.val(s.id)})).filter(x=>x.v!=null); if(vals.length<2) return null;
+    vals.sort((a,b)=>b.v-a.v); return {dm,best:vals[0],worst:vals[vals.length-1],spread:vals[0].v-vals[vals.length-1].v}; })
+    .filter(Boolean).sort((a,b)=>b.spread-a.spread);
+}
+const sevT = {h:'فجوة عالية',m:'فجوة متوسطة',lw:'دون المستهدف'};
+
+/* ===== عناصر واجهة ===== */
+function bars(rows, opt={}){
+  if(!rows.length) return `<div class="empty">لا توجد بيانات</div>`;
+  return `<div class="bars">`+rows.map(r=>`<div class="b"><div class="lb" title="${esc(r.label)}">${r.html||esc(r.label)}</div><div class="trk"><i style="width:${Math.max(0,Math.min(100,r.v||0))}%;background:${r.color||lvl(r.v).col}"></i>${r.mark!=null?`<span class="mk" style="right:${Math.min(100,r.mark)}%"></span>`:''}</div><div class="vv">${f0(r.v)}</div></div>`).join('')+`</div>`;
+}
+function schoolOpts(sel, all){ return (all?`<option value="">${all}</option>`:'') + DB.schools.map(s=>`<option value="${s.id}" ${s.id===sel?'selected':''}>${esc(s.name)}</option>`).join(''); }
+function ring(v,label){ const l=lvl(v); return `<div class="score-ring" style="background:conic-gradient(${l.col} ${(v||0)*3.6}deg,#e7ece9 0)"><div class="score-ring" style="width:74px;height:74px;background:${l.col}"><b>${f0(v)}</b><span>${label||l.t}</span></div></div>`; }
+function openModal(html){ $('#sheet').innerHTML=html; $('#modal').classList.add('on'); $('#sheet').scrollTop=0; }
+function closeModal(){ $('#modal').classList.remove('on'); }
+$('#modal').addEventListener('click', e=>{ if(e.target.id==='modal') closeModal(); });
+const head = t => `<div class="sh"><b>${t}</b><button class="x" onclick="closeModal()">×</button></div>`;
+function years(){ const s=new Set([String(set('year')),S.year]); DB.visits.forEach(v=>s.add(String(v.year))); DB.nafs.forEach(n=>s.add(String(n.year))); DB.indVals.forEach(n=>s.add(String(n.year))); return [...s].filter(Boolean).sort().reverse(); }
+
+/* ===== الدخول ===== */
+function fbErr(e){ const c=(e&&e.code)||''; const m={'auth/invalid-credential':'رقم الجوال أو كلمة المرور غير صحيحة','auth/wrong-password':'كلمة المرور غير صحيحة','auth/user-not-found':'الحساب غير موجود','auth/email-already-in-use':'رقم الجوال مسجّل مسبقاً','auth/weak-password':'كلمة المرور 6 خانات على الأقل','auth/requires-recent-login':'لأمان حسابك: سجّل الخروج ثم الدخول مرة أخرى وأعد المحاولة','auth/too-many-requests':'محاولات كثيرة، انتظر قليلاً','auth/network-request-failed':'لا يوجد اتصال بالإنترنت','permission-denied':'لا تملك صلاحية هذا الإجراء'}; return m[c] || (e&&e.message) || String(e); }
+function fbLoginView(){
+  $('#app').innerHTML = `<div class="login"><div class="box"><div class="logo">م</div>
+  <h2 style="margin:4px 0">${esc(DEFAULTS.settings.appTitle)}</h2><div class="muted">الزيارات • نافس • المؤشرات • الفجوات</div>
+  <input id="lgPh" class="i" inputmode="tel" placeholder="رقم الجوال 05xxxxxxxx" style="margin:18px 0 8px;text-align:center">
+  <input id="lgPw" class="i" type="password" placeholder="كلمة المرور" style="margin-bottom:12px;text-align:center">
+  <button class="btn" style="width:100%" onclick="doLogin()">دخول</button>
+  <div id="ownerLink" style="margin-top:12px"></div>
+  <div class="credit">تصميم وتنفيذ: الأستاذ عبدالله سالم المطرفي</div></div></div>`;
+  $('#lgPw').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
+  window.FBA.ownerExists().then(x=>{ if(!x) $('#ownerLink').innerHTML=`<button class="btn gold" style="width:100%" onclick="ownerView()">أول تشغيل: إنشاء حساب مشرف القيادة</button>`; }).catch(()=>{});
+}
+function ownerView(){
+  openModal(head('إنشاء حساب مشرف القيادة (مرة واحدة)')+`<div class="muted">هذا الحساب هو المسؤول الرئيسي: يضيف المدارس والمشرفين الزائرين.</div>
+  <label class="f">الاسم</label><input class="i" id="ow_n"><label class="f">رقم الجوال (اسم المستخدم)</label><input class="i" id="ow_p" inputmode="tel" placeholder="05xxxxxxxx">
+  <label class="f">كلمة المرور (6 خانات على الأقل)</label><input class="i" id="ow_w" type="password"><label class="f">تأكيد كلمة المرور</label><input class="i" id="ow_w2" type="password">
+  <button class="btn" style="width:100%;margin-top:14px" onclick="ownerCreate()">إنشاء الحساب والدخول</button>`);
+}
+async function ownerCreate(){ const n=$('#ow_n').value.trim(),p=$('#ow_p').value.trim(),w=$('#ow_w').value;
+  if(!n||!/^0?5\d{8}$/.test(p.replace(/\D/g,'').replace(/^966/,'0'))) return toast('اكتب الاسم ورقم جوال صحيح'); if(w.length<6) return toast('كلمة المرور 6 خانات على الأقل'); if(w!==$('#ow_w2').value) return toast('كلمتا المرور غير متطابقتين');
+  busy(true); try{ const r=await call('setupOwner',{name:n,phone:p,pw:w}); closeModal(); load(r.db); render(); toast('مرحباً '+n); }catch(e){ toast(String(e)); } finally{ busy(false); } }
+function genView(){
+  openModal(head('ربط الموقع بقاعدة Firebase')+`<div class="muted">الصق هنا كود الإعدادات الذي نسخته من Firebase (يبدأ بـ const firebaseConfig = {) ثم اضغط تجهيز. سيُنزَّل ملف index.html جاهز ترفعه إلى GitHub مكان الملف الحالي.</div>
+  <textarea class="i" id="genTx" style="min-height:180px;direction:ltr;text-align:left;font-size:12px" placeholder="const firebaseConfig = { apiKey: ... };"></textarea>
+  <button class="btn" style="width:100%;margin-top:10px" onclick="genFile()">تجهيز الملف</button>
+  <div class="card" style="margin-top:14px"><b>قواعد الحماية (Rules)</b><div class="muted">انسخها والصقها في Firestore ← Rules ← Publish</div>
+  <button class="btn gold" style="width:100%;margin-top:8px" onclick="copyRules()">نسخ قواعد الحماية</button>
+  <textarea class="i" id="rulesTx" readonly style="min-height:120px;direction:ltr;text-align:left;font-size:11px;margin-top:8px">${esc(FB_RULES)}</textarea></div>`);
+}
+function copyRules(){ const t=$('#rulesTx'); const done=()=>toast('تم النسخ ✓'); if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(FB_RULES).then(done).catch(()=>{ t.select(); document.execCommand('copy'); done(); }); else { t.select(); t.setSelectionRange(0,99999); document.execCommand('copy'); done(); }
+}
+async function genFile(){
+  const t=$('#genTx').value, cfg={};
+  ['apiKey','authDomain','projectId','storageBucket','messagingSenderId','appId'].forEach(k=>{ const m=t.match(new RegExp(k+'\\s*:\\s*["\']([^"\']+)["\']')); if(m) cfg[k]=m[1]; });
+  if(!cfg.apiKey||!cfg.projectId||!cfg.appId) return toast('لم أجد apiKey و projectId و appId في النص');
+  try{ const src=await (await fetch(location.href.split('#')[0],{cache:'no-store'})).text();
+    if(!src.includes('/*__FBCONFIG__*/null')) return toast('هذا الملف مربوط مسبقاً');
+    const out=src.replace('/*__FBCONFIG__*/null', JSON.stringify(cfg));
+    const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([out],{type:'text/html'})); a.download='index.html'; document.body.appendChild(a); a.click(); a.remove();
+    toast('تم تنزيل index.html — ارفعه إلى GitHub'); }
+  catch(e){ toast('افتح الصفحة من رابط GitHub ثم أعد المحاولة'); }
+}
+function loginView(){
+  if(FB) return fbLoginView();
+  let saved=''; try{ saved=localStorage.getItem('supPin')||''; }catch(e){}
+  $('#app').innerHTML = `${DEMO?'<div class="demo">وضع المعاينة — مشرف القيادة: 1234 • مشرف زائر: 1111 أو 2222</div>':''}
+  <div class="login"><div class="box"><div class="logo">م</div>
+  <h2 style="margin:4px 0">${esc(DEFAULTS.settings.appTitle)}</h2>
+  <div class="muted">الزيارات • نافس • المؤشرات • الفجوات</div>
+  <input id="pin" class="i pin" type="password" inputmode="numeric" placeholder="••••" value="${esc(saved)}" style="margin:18px 0 12px">
+  <button class="btn" style="width:100%" onclick="doLogin()">دخول</button>
+  ${DEMO&&location.protocol==='https:'?'<button class="btn o sm" style="width:100%;margin-top:10px" onclick="genView()">ربط الموقع بقاعدة Firebase (للمالك)</button>':''}
+  <div class="credit">تصميم وتنفيذ: الأستاذ عبدالله سالم المطرفي</div></div></div>`;
+  $('#pin').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
+}
+function logout(){ if(FB&&window.FBA) window.FBA.signOut(); PIN=''; ME={id:'',name:'',role:'admin'}; DB=null; S.year=''; try{localStorage.removeItem('supPin')}catch(e){} loginView(); }
+async function doLogin(){
+  if(FB){ busy(true); try{ const r=await call('login',{phone:$('#lgPh').value,pw:$('#lgPw').value}); load(r.db); render(); }catch(e){ toast(String(e)); } finally{ busy(false); } return; }
+  PIN = $('#pin').value.trim(); busy(true);
+  try{ const r = await call('login',{pin:PIN}); try{ localStorage.setItem('supPin',PIN); }catch(e){} load(r.db); render(); }
+  catch(e){ toast(String(e)); } finally{ busy(false); }
+}
+
+/* ===== الهيكل ===== */
+const TABS = [['home','الرئيسية'],['sup','متابعة المشرفين'],['visits','الزيارات'],['notes','الملاحظات'],['nafs','نتائج نافس'],['ind','المؤشرات'],['gaps','الفجوات والمقارنة'],['rep','تقرير مدرسة'],['set','الإعدادات']];
+function go(t){ S.tab=t; render(); window.scrollTo(0,0); }
+function tabs(){ return isAdmin() ? TABS : TABS.filter(t=>t[0]!=='sup').map(t=>t[0]==='set'?['set','حسابي']:t); }
+function render(){
+  if(!isAdmin() && S.tab==='sup') S.tab='home';
+  const body = {home,sup,visits,notes,nafs,ind,gaps,rep,setv:settingsV}[S.tab==='set'?'setv':S.tab]();
+  $('#app').innerHTML = `${DEMO?'<div class="demo">وضع المعاينة — البيانات تجريبية ولا تُحفظ. عند النشر يرتبط النظام بقوقل شيت.</div>':''}
+  <div class="hdr"><div class="yr"><span style="font-size:12px">العام</span><select onchange="S.year=this.value;render()">${years().map(y=>`<option ${y===S.year?'selected':''}>${y}</option>`).join('')}</select></div>
+  <h1>${esc(set('appTitle'))}</h1><div class="sub">${esc(ME.name)} — ${ROLES[ME.role]||''} • ${esc(set('office'))}</div></div>
+  <div class="nav">${tabs().map(([k,t])=>`<button class="${S.tab===k?'on':''}" onclick="go('${k}')">${t}</button>`).join('')}</div>
+  <main>${body}<div class="credit">تصميم وتنفيذ: الأستاذ عبدالله سالم المطرفي</div></main>`;
+  const n=document.querySelector('.nav .on'); if(n) n.scrollIntoView({inline:'center',block:'nearest'});
+}
+
+/* ===== الرئيسية ===== */
+function home(){
+  if(!DB.schools.length && !isAdmin()) return `<div class="card empty"><h3>مرحباً ${esc(ME.name)}</h3><p>لم تُسند إليك مدارس بعد. تواصل مع مشرف القيادة لإسناد مدارسك.</p></div>`;
+  if(!DB.schools.length) return `<div class="card empty"><h3>مرحباً بك</h3><p>ابدأ بإضافة مدارسك من صفحة الإعدادات، أو حمّل بيانات تجريبية لاستكشاف النظام.</p><div class="row" style="justify-content:center"><button class="btn" onclick="go('set')">إضافة المدارس</button><button class="btn o" onclick="loadDemo()">تحميل بيانات تجريبية</button></div></div>`;
+  const vs=yVisits(), openN=DB.notes.filter(n=>n.status!=='مغلقة'), late=openN.filter(n=>n.due && n.due<today());
+  const comp = DB.schools.map(s=>({s,v:composite(s.id)})).sort((a,b)=>(b.v??-1)-(a.v??-1));
+  const allC = avg(comp.map(x=>x.v)); const notVisited = DB.schools.filter(s=>!yVisits(s.id).length);
+  const up = DB.visits.filter(v=>v.followDate && v.followDate>=today()).sort((a,b)=>a.followDate.localeCompare(b.followDate)).slice(0,5);
+  const dist = {l4:0,l3:0,l2:0,l1:0}; comp.forEach(x=>{ const c=lvl(x.v).c; if(dist[c]!=null) dist[c]++; });
+  const tgt=num(set('visitTarget'))||2, done=DB.schools.reduce((s,x)=>s+Math.min(tgt,yVisits(x.id).length),0), compl=DB.schools.length?done/(DB.schools.length*tgt)*100:null;
+  return `${!isAdmin()?`<div class="card"><h2>إنجاز زياراتي — ${S.year}</h2>${bars([{label:'نسبة إنجاز الزيارات المستهدفة',v:compl,color:'var(--g)'}])}<div class="muted">المستهدف ${tgt} زيارة لكل مدرسة • المنفذ ${done} من ${DB.schools.length*tgt}</div></div>`:''}
+  <div class="kpis">
+   <div class="kpi"><div class="v">${DB.schools.length}</div><div class="t">${isAdmin()?'مدرسة تحت الإشراف':'مدرسة مسندة إليّ'}</div><div class="s">${notVisited.length} لم تُزر هذا العام</div></div>
+   <div class="kpi"><div class="v">${vs.length}</div><div class="t">زيارة في عام ${S.year}</div><div class="s">متوسط ${f0(avg(vs.map(v=>v.score)))}%</div></div>
+   <div class="kpi"><div class="v">${f0(allC)}</div><div class="t">متوسط المؤشر المركب</div><div class="s">${lvl(allC).t}</div></div>
+   <div class="kpi"><div class="v" style="color:${late.length?'var(--l1)':'var(--g)'}">${openN.length}</div><div class="t">ملاحظة مفتوحة</div><div class="s">${late.length} متأخرة عن موعدها</div></div></div>
+  <div class="grid2"><div class="card"><h2>ترتيب المدارس (المؤشر المركب)</h2>
+   <div class="legend"><span><i class="l4"></i>متميز ${dist.l4}</span><span><i class="l3"></i>متقدم ${dist.l3}</span><span><i class="l2"></i>متوسط ${dist.l2}</span><span><i class="l1"></i>يحتاج دعم ${dist.l1}</span></div>
+   ${bars(comp.map((x,i)=>({label:x.s.name,html:`<a onclick="S.rep='${x.s.id}';go('rep')" style="cursor:pointer">${i+1}. ${esc(x.s.name)}</a>`,v:x.v})))}
+   <div class="muted">الأوزان: الزيارات ${set('wVisit')}% • نافس ${set('wNafs')}% • المؤشرات ${set('wInd')}%</div></div>
+  <div class="card"><h2>متوسط مجالات الزيارة لجميع المدارس</h2>${bars(domains().map(d=>({label:d,v:meanOf(id=>domainScore(id,d)),mark:num(set('target'))})))}
+   <div class="muted">الخط الرأسي = المستهدف (${set('target')}%)</div></div></div>
+  <div class="grid2"><div class="card"><h2>نافس: متوسط المدارس مقابل المتوسط الوطني</h2>${nafsCombos().length?bars(nafsCombos().map(c=>{ const nat=avg(DB.schools.map(s=>{const r=nafsRow(s.id,c.g,c.s);return r?r.national:null;})); return {label:`${c.s} – ${shortG(c.g)}`,v:meanOf(id=>{const r=nafsRow(id,c.g,c.s);return r?r.score:null;}),mark:nat}; })):'<div class="empty">لم تُدخل نتائج نافس بعد</div>'}<div class="muted">الخط الرأسي = المتوسط الوطني</div></div>
+  <div class="card"><h2>تنبيهات ومتابعات</h2>
+   ${notVisited.length?`<div class="gap h"><b>مدارس لم تُزر في ${S.year}:</b> ${notVisited.map(s=>esc(s.name)).join('، ')}</div>`:''}
+   ${late.slice(0,4).map(n=>`<div class="gap m"><b>${esc(n.schoolName)}</b> — ${esc(n.text)}<div class="muted">موعد الإغلاق ${esc(n.due)}</div></div>`).join('')}
+   ${up.map(v=>`<div class="gap lw"><b>متابعة: ${esc(v.schoolName)}</b><div class="muted">${esc(v.followDate)} — ${esc(v.type)}</div></div>`).join('')}
+   ${!notVisited.length&&!late.length&&!up.length?'<div class="empty">لا توجد تنبيهات</div>':''}</div></div>
+  <div class="row"><button class="btn" onclick="visitForm()">+ زيارة جديدة</button><button class="btn o" onclick="go('gaps')">تحليل الفجوات</button></div>`;
+}
+/* ===== متابعة المشرفين الزائرين (مشرف القيادة) ===== */
+function visStats(u){
+  const tgt=num(set('visitTarget'))||2;
+  const ids = u.schools==='*' ? DB.schools.map(s=>s.id) : String(u.schools||'').split(',').map(x=>x.trim()).filter(x=>DB.schools.some(s=>s.id===x));
+  const vs = yVisits().filter(v=>v.visitorId===u.id);
+  const done = ids.reduce((s,id)=>s+Math.min(tgt, vs.filter(v=>v.schoolId===id).length),0);
+  const nv = ids.filter(id=>!vs.some(v=>v.schoolId===id));
+  const ns = DB.notes.filter(n=>vs.some(v=>v.id===n.visitId));
+  return {ids, vs, nv, compl: ids.length? done/(ids.length*tgt)*100 : null, avgS: avg(vs.map(v=>v.score)),
+    closeR: ns.length? ns.filter(n=>n.status==='مغلقة').length/ns.length*100 : null, nsOpen: ns.filter(n=>n.status!=='مغلقة').length,
+    last: vs.map(v=>v.date).sort().pop()||'—'};
+}
+function sup(){
+  const V=DB.users.filter(u=>u.role==='visitor'); const tgt=num(set('visitTarget'))||2;
+  const assigned=new Set(); V.forEach(u=>visStats(u).ids.forEach(i=>assigned.add(i)));
+  const orphan=DB.schools.filter(s=>!assigned.has(s.id));
+  const st=V.map(u=>({u,...visStats(u)}));
+  return `<div class="kpis"><div class="kpi"><div class="v">${V.length}</div><div class="t">مشرف زائر</div></div>
+   <div class="kpi"><div class="v">${f0(avg(st.map(x=>x.compl)))}%</div><div class="t">متوسط إنجاز الزيارات</div><div class="s">المستهدف ${tgt} لكل مدرسة</div></div>
+   <div class="kpi"><div class="v">${st.reduce((s,x)=>s+x.vs.length,0)}</div><div class="t">زيارة للمشرفين ${S.year}</div></div>
+   <div class="kpi"><div class="v" style="color:${orphan.length?'var(--l1)':'var(--g)'}">${orphan.length}</div><div class="t">مدرسة بلا مشرف زائر</div></div></div>
+  ${orphan.length?`<div class="gap h"><b>مدارس غير مسندة:</b> ${orphan.map(s=>esc(s.name)).join('، ')} <button class="btn sm o" onclick="go('set')">إسناد</button></div>`:''}
+  <div class="card"><h2>نسبة إنجاز الزيارات لكل مشرف</h2>${bars(st.map(x=>({label:x.u.name,v:x.compl,color:lvl(x.compl).col})))}</div>
+  <div class="card"><h2>لوحة متابعة المشرفين الزائرين</h2>${st.length?`<div class="scx"><table class="tbl"><tr><th>المشرف</th><th>المدارس</th><th>الزيارات</th><th>الإنجاز</th><th>متوسط نتائج زياراته</th><th>إغلاق الملاحظات</th><th>لم تُزر</th><th>آخر زيارة</th></tr>
+   ${st.map(x=>`<tr><td class="nm"><a style="cursor:pointer" onclick="S.vv='${x.u.id}';go('visits')">${esc(x.u.name)}</a></td><td>${x.ids.length}</td><td>${x.vs.length}</td><td>${hm(x.compl)}</td><td>${hm(x.avgS)}</td><td>${x.closeR==null?'—':hm(x.closeR)}</td><td class="${x.nv.length?'c1':''}"><b>${x.nv.length}</b></td><td>${esc(x.last)}</td></tr>`).join('')}</table></div>`:'<div class="empty">لا يوجد مشرفون زائرون. أضفهم من الإعدادات ← المستخدمون.</div>'}</div>
+  ${st.filter(x=>x.nv.length).map(x=>`<div class="gap m"><b>${esc(x.u.name)}</b> — مدارس لم تُزر: ${x.nv.map(i=>esc(sName(i))).join('، ')}</div>`).join('')}
+  <div class="row"><button class="btn gold" onclick="printSup()">طباعة تقرير متابعة المشرفين</button><button class="btn o" onclick="userForm()">+ مشرف زائر</button></div>`;
+}
+function printSup(){
+  const st=DB.users.filter(u=>u.role==='visitor').map(u=>({u,...visStats(u)}));
+  doPrint(prHead('تقرير متابعة زيارات المشرفين الزائرين')+`<table><tr><th>م</th><th>المشرف الزائر</th><th>عدد المدارس</th><th>الزيارات المنفذة</th><th>نسبة الإنجاز</th><th>متوسط نتائج الزيارات</th><th>نسبة إغلاق الملاحظات</th><th>مدارس لم تُزر</th></tr>
+  ${st.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.u.name)}</td><td>${x.ids.length}</td><td>${x.vs.length}</td><td>${f0(x.compl)}%</td><td>${f0(x.avgS)}%</td><td>${x.closeR==null?'—':f0(x.closeR)+'%'}</td><td>${x.nv.map(i=>esc(sName(i))).join('، ')||'—'}</td></tr>`).join('')}</table>
+  <div class="muted">المستهدف: ${esc(set('visitTarget'))} زيارة لكل مدرسة في العام الدراسي.</div><div class="sig"><div>${esc(set('supTitle'))}<br><br>${esc(set('supName'))}</div></div>`);
+}
+function loadDemo(){ run(demoData().filter(o=>!(FB&&o.t==='users')),'تم تحميل البيانات التجريبية'); }
+
+/* ===== الزيارات ===== */
+function visits(){
+  const list = DB.visits.filter(v=>(!S.vf||v.schoolId===S.vf) && (!S.vv||v.visitorId===S.vv)).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  return `<div class="card"><div class="row"><select class="i" style="flex:1" onchange="S.vf=this.value;render()">${schoolOpts(S.vf,'كل المدارس')}</select><button class="btn" onclick="visitForm()">+ زيارة</button></div>
+  ${isAdmin()&&DB.users.some(u=>u.role==='visitor')?`<select class="i" style="margin-top:8px" onchange="S.vv=this.value;render()"><option value="">كل المشرفين</option>${DB.users.filter(u=>u.role==='visitor').map(u=>`<option value="${u.id}" ${S.vv===u.id?'selected':''}>${esc(u.name)}</option>`).join('')}</select>`:''}</div>
+  <div class="card"><h2>الزيارات المسجلة (${list.length})</h2><div class="list">${list.map(v=>`<div class="it" onclick="visitView('${v.id}')"><div class="row"><div class="t1 sp">${esc(v.schoolName||sName(v.schoolId))}</div>${badge(v.score)}<b>${f0(v.score)}%</b></div><div class="t2">${esc(v.date)} • ${esc(v.type)} • ${esc(v.visitorName||set('supName'))}</div><div class="t2">${esc(v.purpose||'')}</div></div>`).join('')||'<div class="empty">لا توجد زيارات</div>'}</div></div>
+  <div class="card"><h2>معدل الزيارات لكل مدرسة (${S.year})</h2>${bars(DB.schools.map(s=>({label:s.name,v:visitScore(s.id),html:`${esc(s.name)} <span class="muted">(${yVisits(s.id).length})</span>`})))}</div>`;
+}
+let VF=null;
+function visitForm(id){
+  const v = id ? DB.visits.find(x=>x.id===id) : null;
+  VF = v ? JSON.parse(JSON.stringify(v)) : {id:uid(),year:S.year,date:today(),schoolId:S.vf||(DB.schools[0]||{}).id||'',type:VTYPES[0],purpose:'',ratings:[],strengths:'',notes:'',recs:'',followDate:'',status:'مكتملة',visitorId:ME.id,visitorName:ME.name};
+  VF.newNotes = [];
+  const rmap={}; VF.ratings.forEach(r=>rmap[r.d+'||'+r.i]=r.s);
+  if(!DB.schools.length){ toast('أضف المدارس أولاً من الإعدادات'); return; }
+  openModal(head(v?'تعديل زيارة':'زيارة إشرافية جديدة')+`
+  <div class="fg"><div class="full"><label class="f">المدرسة</label><select class="i" id="vSc">${schoolOpts(VF.schoolId)}</select></div>
+  <div><label class="f">تاريخ الزيارة</label><input class="i" type="date" id="vDt" value="${esc(VF.date)}"></div>
+  <div><label class="f">العام الدراسي</label><input class="i" id="vYr" value="${esc(VF.year)}"></div>
+  <div class="full"><label class="f">نوع الزيارة</label><select class="i" id="vTp">${VTYPES.map(t=>`<option ${t===VF.type?'selected':''}>${t}</option>`).join('')}</select></div>
+  <div class="full"><label class="f">هدف الزيارة</label><input class="i" id="vPu" value="${esc(VF.purpose)}" placeholder="مثال: متابعة الخطة التشغيلية ونتائج نافس"></div></div>
+  <div class="card" style="margin-top:14px;background:#f7faf8"><div class="row"><b class="sp">بطاقة التقييم</b><span>النتيجة: <b id="vScore">—</b></span></div>
+  <div class="muted">٤ متحقق بدرجة عالية • ٣ متحقق • ٢ جزئي • ١ غير متحقق • لا ينطبق</div>
+  ${domains().map(d=>`<div class="dom"><span>${esc(d)}</span><span id="dS_${domains().indexOf(d)}"></span></div>`+DB.items.filter(x=>x.domain===d).map((x)=>{ const k=DB.items.indexOf(x); const cur=rmap[d+'||'+x.item]; return `<div class="ritem">${esc(x.item)}<div class="rate" data-k="${k}">${RATES.map(([n,t])=>`<button type="button" class="${cur===n?'on'+n:''}" onclick="rate(${k},${n},this)">${n||'—'}<div style="font-size:10px;font-weight:500">${t}</div></button>`).join('')}</div></div>`; }).join('')).join('')}</div>
+  <label class="f">جوانب التميز</label><textarea class="i" id="vSt">${esc(VF.strengths)}</textarea>
+  <label class="f">ملاحظات الزيارة</label><textarea class="i" id="vNo">${esc(VF.notes)}</textarea>
+  <label class="f">التوصيات</label><textarea class="i" id="vRe">${esc(VF.recs)}</textarea>
+  <div class="fg"><div><label class="f">موعد زيارة المتابعة</label><input class="i" type="date" id="vFd" value="${esc(VF.followDate)}"></div>
+  <div><label class="f">حالة الزيارة</label><select class="i" id="vSs">${['مكتملة','مجدولة','ملغاة'].map(t=>`<option ${t===VF.status?'selected':''}>${t}</option>`).join('')}</select></div></div>
+  <div class="card" style="margin-top:14px"><div class="row"><b class="sp">ملاحظات للمتابعة (تُسجّل في متتبع الملاحظات)</b><button class="btn sm o" onclick="addNoteRow()">+ ملاحظة</button></div><div id="nRows"></div></div>
+  <button class="btn" style="width:100%;margin-top:10px" onclick="saveVisit()">حفظ الزيارة</button>`);
+  VF.ratings.forEach(r=>{}); updScore();
+}
+function rate(k,n,el){
+  const it=DB.items[k]; VF.ratings=VF.ratings.filter(r=>!(r.d===it.domain&&r.i===it.item)); VF.ratings.push({d:it.domain,i:it.item,s:n});
+  el.parentNode.querySelectorAll('button').forEach(b=>b.className=''); el.className='on'+n; updScore();
+}
+function updScore(){ const p=vPct(VF.ratings); const e=$('#vScore'); if(e) e.innerHTML = p==null?'—':`${f0(p)}% ${badge(p)}`;
+  domains().forEach((d,i)=>{ const x=$('#dS_'+i); if(x){ const v=vPct(VF.ratings.filter(r=>r.d===d)); x.innerHTML = v==null?'':`<span class="${lvl(v).c.replace('l','c')}">${f0(v)}%</span>`; } }); }
+function addNoteRow(){
+  const i=VF.newNotes.length; VF.newNotes.push({});
+  const d=document.createElement('div'); d.className='card'; d.style.background='#fbfcfb';
+  d.innerHTML=`<label class="f">نص الملاحظة</label><textarea class="i" id="nT${i}" style="min-height:50px"></textarea><div class="fg">
+  <div><label class="f">المجال</label><select class="i" id="nD${i}">${domains().map(x=>`<option>${esc(x)}</option>`).join('')}<option>أخرى</option></select></div>
+  <div><label class="f">الأولوية</label><select class="i" id="nP${i}"><option>عالية</option><option selected>متوسطة</option><option>منخفضة</option></select></div>
+  <div><label class="f">المسؤول</label><input class="i" id="nO${i}" value="مدير المدرسة"></div><div><label class="f">تاريخ الإغلاق المتوقع</label><input class="i" type="date" id="nU${i}"></div></div>`;
+  $('#nRows').appendChild(d);
+}
+function saveVisit(){
+  VF.schoolId=$('#vSc').value; VF.schoolName=sName(VF.schoolId); VF.date=$('#vDt').value; VF.year=$('#vYr').value.trim()||S.year; VF.type=$('#vTp').value; VF.purpose=$('#vPu').value;
+  VF.strengths=$('#vSt').value; VF.notes=$('#vNo').value; VF.recs=$('#vRe').value; VF.followDate=$('#vFd').value; VF.status=$('#vSs').value;
+  if(!VF.ratings.some(r=>r.s>0)){ toast('قيّم بنداً واحداً على الأقل'); return; }
+  const sc=vPct(VF.ratings); const obj={id:VF.id,year:VF.year,date:VF.date,schoolId:VF.schoolId,schoolName:VF.schoolName,type:VF.type,purpose:VF.purpose,ratings:JSON.stringify(VF.ratings),score:sc.toFixed(1),strengths:VF.strengths,notes:VF.notes,recs:VF.recs,followDate:VF.followDate,status:VF.status,visitorId:VF.visitorId||ME.id,visitorName:VF.visitorName||ME.name};
+  const ops=[{op:'upsert',t:'visits',obj}];
+  VF.newNotes.forEach((_,i)=>{ const t=$('#nT'+i).value.trim(); if(t) ops.push({op:'upsert',t:'notes',obj:{id:uid()+i,visitId:VF.id,schoolId:VF.schoolId,schoolName:VF.schoolName,domain:$('#nD'+i).value,text:t,priority:$('#nP'+i).value,owner:$('#nO'+i).value,due:$('#nU'+i).value,status:'مفتوحة',closedDate:''}}); });
+  run(ops,'تم حفظ الزيارة').then(ok=>{ if(ok) visitView(VF.id); });
+}
+function visitView(id){
+  const v=DB.visits.find(x=>x.id===id); if(!v) return closeModal();
+  const ns=DB.notes.filter(n=>n.visitId===id);
+  openModal(head('تقرير الزيارة')+`<div class="row" style="gap:14px">${ring(v.score)}<div class="sp"><div style="font-weight:800;font-size:16px">${esc(v.schoolName)}</div><div class="muted">${esc(v.date)} • ${esc(v.type)}</div><div class="muted">الزائر: ${esc(v.visitorName||set('supName'))}</div><div class="muted">${esc(v.purpose)}</div></div></div>
+  <div class="card" style="margin-top:12px"><h2>نتائج المجالات</h2>${bars(domains().map(d=>({label:d,v:vPct(v.ratings.filter(r=>r.d===d)),mark:num(set('target'))})))}</div>
+  ${v.strengths?`<div class="card"><h2>جوانب التميز</h2><div style="white-space:pre-wrap">${esc(v.strengths)}</div></div>`:''}
+  ${v.notes?`<div class="card"><h2>ملاحظات الزيارة</h2><div style="white-space:pre-wrap">${esc(v.notes)}</div></div>`:''}
+  ${v.recs?`<div class="card"><h2>التوصيات</h2><div style="white-space:pre-wrap">${esc(v.recs)}</div></div>`:''}
+  ${ns.length?`<div class="card"><h2>ملاحظات المتابعة</h2>${ns.map(noteCard).join('')}</div>`:''}
+  <div class="row"><button class="btn gold" onclick="printVisit('${id}')">طباعة التقرير / PDF</button><a class="btn" style="background:#25D366;text-decoration:none" target="_blank" href="${waLink(v)}">إرسال للقائد واتساب</a>${canEdit(v)?`<button class="btn o" onclick="visitForm('${id}')">تعديل</button><span class="sp"></span><button class="btn red" onclick="delVisit('${id}')">حذف</button>`:''}</div>`);
+}
+function visitorTitle(v){ const u=DB.users.find(x=>x.id===v.visitorId); const vis = u ? u.role==='visitor' : (v.visitorId===ME.id ? ME.role==='visitor' : (v.visitorId&&v.visitorId!=='admin')); return vis?'المشرف الزائر':esc(set('supTitle')); }
+function waLink(v){
+  const s=DB.schools.find(x=>x.id===v.schoolId)||{}; let ph=String(s.phone||'').replace(/\D/g,''); if(ph.startsWith('05')) ph='966'+ph.slice(1); else if(ph.startsWith('5')&&ph.length===9) ph='966'+ph; if(!/^9665\d{8}$/.test(ph)) ph='';
+  const dm=domains().map(d=>{const x=vPct(v.ratings.filter(r=>r.d===d)); return x==null?'':`• ${d}: ${f0(x)}%`;}).filter(Boolean).join('\n');
+  const ns=DB.notes.filter(n=>n.visitId===v.id).map(n=>`- ${n.text}${n.due?' (قبل '+n.due+')':''}`).join('\n');
+  const t=`السلام عليكم ورحمة الله\nقائد ${s.name||v.schoolName} المحترم\n\nملخص الزيارة الإشرافية بتاريخ ${v.date}\nنوع الزيارة: ${v.type}\nالنتيجة العامة: ${f0(v.score)}% (${lvl(v.score).t})\n\n${dm}${v.strengths?'\n\nجوانب التميز:\n'+v.strengths:''}${v.recs?'\n\nالتوصيات:\n'+v.recs:''}${ns?'\n\nملاحظات للمتابعة:\n'+ns:''}${v.followDate?'\n\nموعد زيارة المتابعة: '+v.followDate:''}\n\n${v.visitorName||set('supName')}\n${set('supTitle')}`;
+  return (ph?'https://wa.me/'+ph:'https://wa.me/')+'?text='+encodeURIComponent(t);
+}
+function delVisit(id){ if(!confirm('حذف الزيارة وملاحظاتها؟')) return; run([{op:'remove',t:'visits',id},{op:'removeWhere',t:'notes',match:{visitId:id}}],'تم الحذف').then(closeModal); }
+
+/* ===== الملاحظات ===== */
+const stC = s => s==='مغلقة'?'st-done':s==='قيد التنفيذ'?'st-prog':'st-open';
+function noteCard(n){
+  const late = n.status!=='مغلقة' && n.due && n.due<today();
+  return `<div class="gap ${n.priority==='عالية'?'h':n.priority==='منخفضة'?'lw':'m'}"><div class="row"><b class="sp">${esc(n.schoolName)}</b><span class="note-st ${stC(n.status)}">${esc(n.status)}</span></div>
+  <div style="margin:4px 0">${esc(n.text)}</div><div class="muted">${esc(n.domain)} • أولوية ${esc(n.priority)} • ${esc(n.owner)}${n.due?` • الإغلاق ${esc(n.due)}`:''} ${late?'<b class="c1">• متأخرة</b>':''}</div>
+  <div class="row" style="margin-top:6px">${['مفتوحة','قيد التنفيذ','مغلقة'].filter(s=>s!==n.status).map(s=>`<button class="btn sm o" onclick="noteSt('${n.id}','${s}')">${s==='مغلقة'?'إغلاق ✓':s}</button>`).join('')}<span class="sp"></span><button class="btn sm red" onclick="delNote('${n.id}')">حذف</button></div></div>`;
+}
+function noteSt(id,s){ const n=Object.assign({},DB.notes.find(x=>x.id===id)); n.status=s; n.closedDate = s==='مغلقة'?today():''; run([{op:'upsert',t:'notes',obj:n}],'تم التحديث').then(()=>{ if($('#modal').classList.contains('on')&&n.visitId&&DB.visits.find(v=>v.id===n.visitId)) visitView(n.visitId); }); }
+function delNote(id){ if(confirm('حذف الملاحظة؟')) run([{op:'remove',t:'notes',id}],'تم الحذف'); }
+function notes(){
+  const f=S.nf; const all=DB.notes.filter(n=>!f.sc||n.schoolId===f.sc);
+  const L = all.filter(n=> f.st==='all' ? true : f.st==='open' ? n.status!=='مغلقة' : f.st==='late' ? (n.status!=='مغلقة'&&n.due&&n.due<today()) : n.status==='مغلقة');
+  const closed=all.filter(n=>n.status==='مغلقة').length, rate = all.length? closed/all.length*100 : null;
+  const bySc = DB.schools.map(s=>{ const a=DB.notes.filter(n=>n.schoolId===s.id); return {label:s.name,v:a.length?a.filter(n=>n.status==='مغلقة').length/a.length*100:null,html:`${esc(s.name)} <span class="muted">(${a.filter(n=>n.status!=='مغلقة').length} مفتوحة)</span>`}; }).filter(x=>x.v!=null);
+  return `<div class="kpis"><div class="kpi"><div class="v">${all.length}</div><div class="t">إجمالي الملاحظات</div></div><div class="kpi"><div class="v">${all.filter(n=>n.status!=='مغلقة').length}</div><div class="t">مفتوحة / قيد التنفيذ</div></div>
+  <div class="kpi"><div class="v" style="color:var(--l1)">${all.filter(n=>n.status!=='مغلقة'&&n.due&&n.due<today()).length}</div><div class="t">متأخرة</div></div><div class="kpi"><div class="v">${f0(rate)}%</div><div class="t">نسبة الإغلاق</div></div></div>
+  <div class="card"><div class="row"><select class="i" style="flex:1" onchange="S.nf.sc=this.value;render()">${schoolOpts(f.sc,'كل المدارس')}</select><button class="btn" onclick="noteForm()">+ ملاحظة</button></div>
+  <div class="chips" style="margin-top:10px">${[['open','المفتوحة'],['late','المتأخرة'],['done','المغلقة'],['all','الكل']].map(([k,t])=>`<button class="${f.st===k?'on':''}" onclick="S.nf.st='${k}';render()">${t}</button>`).join('')}</div></div>
+  <div class="card"><h2>الملاحظات (${L.length})</h2>${L.sort((a,b)=>String(a.due||'9').localeCompare(String(b.due||'9'))).map(noteCard).join('')||'<div class="empty">لا توجد ملاحظات</div>'}</div>
+  <div class="card"><h2>نسبة إغلاق الملاحظات لكل مدرسة</h2>${bars(bySc)}</div>`;
+}
+function noteForm(){
+  openModal(head('ملاحظة جديدة')+`<label class="f">المدرسة</label><select class="i" id="xS">${schoolOpts(S.nf.sc)}</select><div id="nRows"></div><button class="btn" style="width:100%;margin-top:10px" onclick="saveNote()">حفظ</button>`);
+  VF={newNotes:[]}; addNoteRow();
+}
+function saveNote(){ const t=$('#nT0').value.trim(); if(!t) return toast('اكتب نص الملاحظة'); const sid=$('#xS').value;
+  run([{op:'upsert',t:'notes',obj:{id:uid(),visitId:'',schoolId:sid,schoolName:sName(sid),domain:$('#nD0').value,text:t,priority:$('#nP0').value,owner:$('#nO0').value,due:$('#nU0').value,status:'مفتوحة',closedDate:''}}],'تم الحفظ').then(closeModal); }
+
+/* ===== نافس ===== */
+function nafs(){
+  const combos=nafsCombos(); const sc=S.nafsSc;
+  let schoolBlock='';
+  if(sc){
+    const ys=[...new Set(DB.nafs.filter(n=>n.schoolId===sc).map(n=>String(n.year)))].sort();
+    const y=nafsYear(sc), py = ys.filter(x=>Number(x)<Number(y)).pop();
+    schoolBlock = `<div class="card"><h2>${esc(sName(sc))} — نافس ${y||''}</h2>${y?`<div class="legend"><span><i style="background:var(--g)"></i>المدرسة</span><span><i style="background:var(--gold)"></i>متوسط المدارس</span><span><i style="background:#8fa39a"></i>المتوسط الوطني</span></div>
+    <div class="bars multi">${combos.map(c=>{ const r=nafsRow(sc,c.g,c.s); if(!r) return ''; const m=meanOf(id=>{const x=nafsRow(id,c.g,c.s);return x?x.score:null;}); const p=py?nafsRow(sc,c.g,c.s,py):null; const d=p&&p.score!=null?r.score-p.score:null;
+      return `<div class="b" style="margin:12px 0"><div class="lb">${esc(c.s)} – ${shortG(c.g)}${d!=null?`<div class="${d>=0?'c4':'c1'}" style="font-size:11.5px;font-weight:800">${d>=0?'▲':'▼'} ${f0(Math.abs(d))} عن ${py}</div>`:''}</div><div><div class="trk"><i style="width:${r.score}%;background:var(--g)"></i></div><div class="trk"><i style="width:${m||0}%;background:var(--gold)"></i></div><div class="trk"><i style="width:${r.national||0}%;background:#8fa39a"></i></div></div><div class="vv">${f0(r.score)}</div></div>`; }).join('')}</div>`:'<div class="empty">لا توجد نتائج لهذه المدرسة</div>'}
+    <div class="row"><button class="btn sm o" onclick="nafsForm('${sc}')">إدخال / تعديل النتائج</button></div></div>`;
+  }
+  return `<div class="card"><div class="row"><select class="i" style="flex:1" onchange="S.nafsSc=this.value;render()">${schoolOpts(sc,'اختر مدرسة لعرض تقريرها')}</select><button class="btn" onclick="nafsForm(S.nafsSc)">+ إدخال نتائج</button></div></div>
+  ${schoolBlock}
+  <div class="card"><h2>مصفوفة نتائج نافس بين المدارس</h2>${combos.length?`<div class="scx"><table class="tbl"><tr><th>المدرسة</th>${combos.map(c=>`<th>${esc(c.s)}<br><small>${shortG(c.g)}</small></th>`).join('')}<th>المتوسط</th></tr>
+  ${DB.schools.map(s=>`<tr><td class="nm">${esc(s.name)}</td>${combos.map(c=>{const r=nafsRow(s.id,c.g,c.s);return `<td>${r?hm(r.score):'—'}</td>`;}).join('')}<td>${hm(nafsScore(s.id))}</td></tr>`).join('')}
+  <tr><td class="nm">متوسط المدارس</td>${combos.map(c=>`<td><b>${f0(meanOf(id=>{const r=nafsRow(id,c.g,c.s);return r?r.score:null;}))}</b></td>`).join('')}<td><b>${f0(meanOf(nafsScore))}</b></td></tr>
+  <tr><td class="nm">المتوسط الوطني</td>${combos.map(c=>`<td class="muted">${f0(avg(DB.schools.map(s=>{const r=nafsRow(s.id,c.g,c.s);return r?r.national:null;})))}</td>`).join('')}<td></td></tr></table></div>`:'<div class="empty">لم تُدخل نتائج بعد</div>'}</div>
+  <div class="card"><h2>ترتيب المدارس في نافس</h2>${bars(DB.schools.map(s=>({label:s.name,v:nafsScore(s.id)})).sort((a,b)=>(b.v??-1)-(a.v??-1)))}</div>`;
+}
+function nafsForm(sc){
+  if(!DB.schools.length) return toast('أضف المدارس أولاً');
+  sc = sc || DB.schools[0].id;
+  openModal(head('إدخال نتائج نافس')+`<div class="fg"><div class="full"><label class="f">المدرسة</label><select class="i" id="fS" onchange="nafsFill()">${schoolOpts(sc)}</select></div>
+  <div><label class="f">عام الاختبار</label><input class="i" id="fY" value="${esc(S.year)}" onchange="nafsFill()"></div>
+  <div><label class="f">الصف</label><select class="i" id="fG" onchange="nafsFill()">${Object.keys(GRADES).map(g=>`<option>${g}</option>`).join('')}</select></div></div>
+  <div id="fRows"></div><div class="muted" style="margin-top:6px">أدخل متوسط أداء المدرسة (٪) في كل مجال، والمتوسط الوطني من تقرير نافس للمقارنة.</div>
+  <button class="btn" style="width:100%;margin-top:12px" onclick="saveNafs()">حفظ النتائج</button>`); nafsFill();
+}
+function nafsFill(){ const sc=$('#fS').value,y=$('#fY').value.trim(),g=$('#fG').value;
+  $('#fRows').innerHTML = GRADES[g].map((s,i)=>{ const r=DB.nafs.find(n=>n.schoolId===sc&&String(n.year)===y&&n.grade===g&&n.subject===s)||{}; return `<div class="fg"><div><label class="f">${s} — المدرسة %</label><input class="i" inputmode="decimal" id="fv${i}" value="${r.score??''}"></div><div><label class="f">${s} — الوطني %</label><input class="i" inputmode="decimal" id="fn${i}" value="${r.national??''}"></div></div>`; }).join(''); }
+function saveNafs(){ const sc=$('#fS').value,y=$('#fY').value.trim(),g=$('#fG').value; const rows=[];
+  GRADES[g].forEach((s,i)=>{ const v=num($('#fv'+i).value); if(v!=null) rows.push({id:uid()+i,schoolId:sc,schoolName:sName(sc),year:y,grade:g,subject:s,score:String(v),national:String(num($('#fn'+i).value)??'')}); });
+  run([{op:'replace',t:'nafs',match:{schoolId:sc,year:y,grade:g},rows}],'تم حفظ نتائج نافس').then(ok=>{ if(ok){ S.nafsSc=sc; closeModal(); render(); } }); }
+
+/* ===== المؤشرات ===== */
+function ind(){
+  const defs=DB.indDefs;
+  return `<div class="card"><div class="row"><b class="sp">مؤشرات الأداء — عام ${S.year}</b><button class="btn" onclick="indForm()">+ إدخال قيم مدرسة</button></div>
+  <div class="muted">تُحوَّل كل قيمة إلى نسبة تحقق من المستهدف (للمؤشرات العكسية مثل الغياب: كلما قلّت القيمة ارتفع التحقق).</div></div>
+  <div class="card"><h2>مصفوفة المؤشرات (نسبة التحقق %)</h2>${defs.length?`<div class="scx"><table class="tbl"><tr><th>المدرسة</th>${defs.map(d=>`<th>${esc(d.name)}<br><small>المستهدف ${f0(d.target)}${esc(d.unit)} ${d.dir==='أقل'?'↓':'↑'}</small></th>`).join('')}<th>الإجمالي</th></tr>
+  ${DB.schools.map(s=>`<tr><td class="nm"><a onclick="indForm('${s.id}')" style="cursor:pointer">${esc(s.name)} ✎</a></td>${defs.map(d=>{const v=indVal(s.id,d.name);return `<td>${v==null?'—':hm(ach(d,v))+`<div class="muted" style="font-size:11px">${f0(v)}${esc(d.unit)}</div>`}</td>`;}).join('')}<td>${hm(indScore(s.id))}</td></tr>`).join('')}
+  <tr><td class="nm">متوسط المدارس</td>${defs.map(d=>`<td><b>${f0(meanOf(id=>indVal(id,d.name)))}${esc(d.unit)}</b></td>`).join('')}<td><b>${f0(meanOf(indScore))}</b></td></tr></table></div>`:'<div class="empty">عرّف المؤشرات من الإعدادات</div>'}</div>
+  <div class="card"><h2>ترتيب المدارس في المؤشرات</h2>${bars(DB.schools.map(s=>({label:s.name,v:indScore(s.id)})).sort((a,b)=>(b.v??-1)-(a.v??-1)))}</div>`;
+}
+function indForm(sc){
+  if(!DB.schools.length) return toast('أضف المدارس أولاً');
+  sc=sc||DB.schools[0].id;
+  openModal(head('قيم المؤشرات — '+S.year)+`<label class="f">المدرسة</label><select class="i" id="iS" onchange="indFill()">${schoolOpts(sc)}</select><div id="iRows"></div><button class="btn" style="width:100%;margin-top:12px" onclick="saveInd()">حفظ</button>`); indFill();
+}
+function indFill(){ const sc=$('#iS').value; $('#iRows').innerHTML = DB.indDefs.map((d,i)=>{ const v=indVal(sc,d.name); return `<label class="f">${esc(d.name)} <span class="muted">(المستهدف ${f0(d.target)}${esc(d.unit)} — ${d.dir==='أقل'?'الأقل أفضل':'الأعلى أفضل'})</span></label><input class="i" inputmode="decimal" id="iv${i}" value="${v??''}">`; }).join(''); }
+function saveInd(){ const sc=$('#iS').value, rows=[]; DB.indDefs.forEach((d,i)=>{ const v=num($('#iv'+i).value); if(v!=null) rows.push({id:uid()+i,schoolId:sc,schoolName:sName(sc),year:S.year,name:d.name,value:String(v)}); });
+  run([{op:'replace',t:'indVals',match:{schoolId:sc,year:S.year},rows}],'تم حفظ المؤشرات').then(ok=>ok&&closeModal()); }
+
+/* ===== الفجوات والمقارنة ===== */
+function gaps(){
+  if(DB.schools.length<1) return `<div class="card empty">أضف المدارس وبياناتها أولاً</div>`;
+  const D=dims(), sp=spreads().slice(0,8);
+  const sc=S.gapSc, G = sc ? gapsFor(sc) : null;
+  const all = DB.schools.map(s=>({s,g:gapsFor(s.id)}));
+  const A=S.cmpA||(DB.schools[0]||{}).id, B=S.cmpB||(DB.schools[1]||DB.schools[0]||{}).id;
+  return `<div class="kpis"><div class="kpi"><div class="v" style="color:var(--l1)">${all.reduce((s,x)=>s+x.g.filter(g=>g.sev==='h').length,0)}</div><div class="t">فجوة عالية</div></div>
+   <div class="kpi"><div class="v" style="color:var(--l2)">${all.reduce((s,x)=>s+x.g.filter(g=>g.sev==='m').length,0)}</div><div class="t">فجوة متوسطة</div></div>
+   <div class="kpi"><div class="v">${DB.schools.filter(s=>lvl(composite(s.id)).c==='l1').length}</div><div class="t">مدارس تحتاج دعماً</div></div>
+   <div class="kpi"><div class="v">${sp[0]?f0(sp[0].spread):'—'}</div><div class="t">أكبر تباين بين المدارس</div><div class="s">${sp[0]?esc(sp[0].dm.label):''}</div></div></div>
+  <div class="card"><h2>الخريطة الحرارية: المدارس × المؤشرات</h2><div class="legend"><span><i class="l4"></i>85+</span><span><i class="l3"></i>75–84</span><span><i class="l2"></i>60–74</span><span><i class="l1"></i>أقل من 60</span></div>
+  <div class="scx"><table class="tbl"><tr><th>المدرسة</th>${D.map(d=>`<th><small>${d.cat}</small><br>${esc(d.label)}</th>`).join('')}<th>المركب</th></tr>
+  ${DB.schools.map(s=>`<tr><td class="nm">${esc(s.name)}</td>${D.map(d=>`<td>${hm(d.val(s.id))}</td>`).join('')}<td>${hm(composite(s.id))}</td></tr>`).join('')}
+  <tr><td class="nm">المتوسط</td>${D.map(d=>`<td><b>${f0(meanOf(d.val))}</b></td>`).join('')}<td><b>${f0(meanOf(composite))}</b></td></tr></table></div></div>
+  <div class="card"><h2>أكبر الفجوات بين المدارس (التباين)</h2>${sp.map(x=>`<div class="gap ${x.spread>=25?'h':x.spread>=15?'m':'lw'}"><div class="row"><b class="sp">${esc(x.dm.label)} <span class="muted">(${x.dm.cat})</span></b><b>${f0(x.spread)} نقطة</b></div>
+   <div class="muted">الأعلى: ${esc(x.best.s.name)} (${f0(x.best.v)}) • الأدنى: ${esc(x.worst.s.name)} (${f0(x.worst.v)})</div><div class="rec">مقترح: تبادل الخبرات بين ${esc(x.best.s.name)} و${esc(x.worst.s.name)} في «${esc(x.dm.label)}» عبر زيارة تبادلية أو مجتمع تعلم مشترك.</div></div>`).join('')||'<div class="empty">تحتاج بيانات مدرستين على الأقل</div>'}</div>
+  <div class="card"><h2>فجوات مدرسة محددة</h2><select class="i" onchange="S.gapSc=this.value;render()">${schoolOpts(sc,'اختر مدرسة')}</select>
+   ${G?`<div class="muted" style="margin:8px 0">تُقارن كل نتيجة بمتوسط المدارس وبالمستهدف/المتوسط الوطني. حد الفجوة: ${set('gapThr')} نقاط.</div>`+(G.map(g=>`<div class="gap ${g.sev}"><div class="row"><b class="sp">${esc(g.dm.label)} <span class="muted">(${g.dm.cat})</span></b><span class="badge ${g.sev==='h'?'l1':g.sev==='m'?'l2':'na'}">${sevT[g.sev]}</span></div>
+   <div class="muted">القيمة ${f0(g.v)} • متوسط المدارس ${f0(g.m)} (${g.gm>=0?'+':''}${f0(g.gm)}) • ${g.dm.cat==='نافس'?'الوطني':'المستهدف'} ${f0(g.ref)} (${g.gr>=0?'+':''}${f0(g.gr)})</div><div class="rec">${recFor(g)}</div></div>`).join('')||'<div class="empty">لا توجد فجوات — أداء المدرسة في المستوى المطلوب 👏</div>'):''}</div>
+  <div class="card"><h2>مقارنة بين مدرستين</h2><div class="fg"><select class="i" onchange="S.cmpA=this.value;render()">${schoolOpts(A)}</select><select class="i" onchange="S.cmpB=this.value;render()">${schoolOpts(B)}</select></div>
+   <div class="legend"><span><i style="background:var(--g)"></i>${esc(sName(A))}</span><span><i style="background:var(--gold)"></i>${esc(sName(B))}</span></div>
+   <div class="bars multi">${[{label:'المؤشر المركب',val:composite},{label:'الزيارات',val:visitScore},{label:'نافس',val:nafsScore},{label:'المؤشرات',val:indScore}].concat(D).map(d=>{ const a=d.val(A),b=d.val(B); if(a==null&&b==null) return ''; const df=a!=null&&b!=null?a-b:null;
+     return `<div class="b"><div class="lb">${esc(d.label)}${df!=null?`<div style="font-size:11px" class="${Math.abs(df)>=num(set('gapThr'))?'c1':'muted'}">فرق ${f0(Math.abs(df))}</div>`:''}</div><div><div class="trk"><i style="width:${a||0}%;background:var(--g)"></i></div><div class="trk"><i style="width:${b||0}%;background:var(--gold)"></i></div></div><div class="vv" style="font-size:11.5px">${f0(a)}<br>${f0(b)}</div></div>`; }).join('')}</div></div>`;
+}
+
+/* ===== تقرير مدرسة ===== */
+function rep(){
+  const sc=S.rep||(DB.schools[0]||{}).id; if(!sc) return `<div class="card empty">لا توجد مدارس</div>`;
+  S.rep=sc; const s=DB.schools.find(x=>x.id===sc)||{}; const c=composite(sc); const rank=DB.schools.map(x=>({id:x.id,v:composite(x.id)})).sort((a,b)=>(b.v??-1)-(a.v??-1)).findIndex(x=>x.id===sc)+1;
+  const G=gapsFor(sc), on=DB.notes.filter(n=>n.schoolId===sc&&n.status!=='مغلقة');
+  return `<div class="card"><select class="i" onchange="S.rep=this.value;render()">${schoolOpts(sc)}</select></div>
+  <div class="card"><div class="row" style="gap:14px">${ring(c)}<div class="sp"><div style="font-weight:800;font-size:17px">${esc(s.name)}</div><div class="muted">الرقم الوزاري ${esc(s.ministryNo)} • ${esc(s.stage)} • ${esc(s.students)} طالب</div><div class="muted">القائد: ${esc(s.principal)} • ${esc(s.phone)}</div><div style="margin-top:4px">الترتيب: <b>${rank}</b> من ${DB.schools.length}</div></div></div>
+  ${bars([{label:'الزيارات الإشرافية',v:visitScore(sc),mark:meanOf(visitScore)},{label:'نتائج نافس',v:nafsScore(sc),mark:meanOf(nafsScore)},{label:'مؤشرات الأداء',v:indScore(sc),mark:meanOf(indScore)}])}<div class="muted">الخط الرأسي = متوسط المدارس</div></div>
+  <div class="card"><h2>مجالات الزيارة</h2>${bars(domains().map(d=>({label:d,v:domainScore(sc,d),mark:meanOf(id=>domainScore(id,d))})))}</div>
+  <div class="card"><h2>أولويات التحسين (${G.length})</h2>${G.slice(0,6).map(g=>`<div class="gap ${g.sev}"><b>${esc(g.dm.label)}</b> <span class="muted">${f0(g.v)} مقابل متوسط ${f0(g.m)}</span><div class="rec">${recFor(g)}</div></div>`).join('')||'<div class="empty">لا توجد فجوات</div>'}</div>
+  <div class="card"><h2>ملاحظات مفتوحة (${on.length})</h2>${on.map(noteCard).join('')||'<div class="empty">لا توجد</div>'}</div>
+  <button class="btn gold" style="width:100%" onclick="printSchool('${sc}')">طباعة تقرير المدرسة</button>`;
+}
+
+/* ===== الطباعة ===== */
+function prHead(title){ return `<div class="pr"><div class="pr-h"><div>المملكة العربية السعودية<br>وزارة التعليم<br>${esc(set('region'))}<br>${esc(set('office'))}</div><div style="text-align:left">العام الدراسي: ${esc(S.year)}هـ<br>تاريخ الطباعة: ${today()}</div></div><div class="pr-t">${title}</div>`; }
+function doPrint(html){ $('#print').innerHTML = html + `<div style="text-align:center;font-size:10px;color:#777;margin-top:18px">${esc(set('appTitle'))}</div></div>`; setTimeout(()=>window.print(),150); }
+function printVisit(id){
+  const v=DB.visits.find(x=>x.id===id), s=DB.schools.find(x=>x.id===v.schoolId)||{}, ns=DB.notes.filter(n=>n.visitId===id);
+  const lab = n => (RATES.find(r=>r[0]===n)||[])[1]||'';
+  doPrint(prHead('تقرير زيارة إشرافية')+`<table><tr><th>المدرسة</th><td>${esc(v.schoolName)}</td><th>الرقم الوزاري</th><td>${esc(s.ministryNo||'')}</td></tr><tr><th>المشرف الزائر</th><td>${esc(v.visitorName||set('supName'))}</td><th>قائد المدرسة</th><td>${esc(s.principal||'')}</td></tr><tr><th>تاريخ الزيارة</th><td>${esc(v.date)}</td><th>نوع الزيارة</th><td>${esc(v.type)}</td></tr><tr><th>هدف الزيارة</th><td colspan="3">${esc(v.purpose)}</td></tr><tr><th>النتيجة العامة</th><td><b>${f0(v.score)}%</b></td><th>المستوى</th><td><b>${lvl(v.score).t}</b></td></tr></table>
+  <div class="sec">بطاقة التقييم</div><table><tr><th>م</th><th>البند</th><th style="width:90px">التقدير</th></tr>${domains().map(d=>{ const rs=v.ratings.filter(r=>r.d===d); if(!rs.length) return ''; return `<tr><th colspan="2" style="text-align:right">${esc(d)}</th><th>${f0(vPct(rs))}%</th></tr>`+rs.map((r,i)=>`<tr><td style="text-align:center">${i+1}</td><td>${esc(r.i)}</td><td style="text-align:center">${r.s||'—'} ${lab(r.s)}</td></tr>`).join(''); }).join('')}</table>
+  <div class="sec">جوانب التميز</div><div class="box">${esc(v.strengths)}</div><div class="sec">ملاحظات الزيارة</div><div class="box">${esc(v.notes)}</div><div class="sec">التوصيات</div><div class="box">${esc(v.recs)}</div>
+  ${ns.length?`<div class="sec">ملاحظات المتابعة</div><table><tr><th>الملاحظة</th><th>المجال</th><th>الأولوية</th><th>المسؤول</th><th>موعد الإغلاق</th></tr>${ns.map(n=>`<tr><td>${esc(n.text)}</td><td>${esc(n.domain)}</td><td>${esc(n.priority)}</td><td>${esc(n.owner)}</td><td>${esc(n.due)}</td></tr>`).join('')}</table>`:''}
+  ${v.followDate?`<div style="margin-top:8px">موعد زيارة المتابعة: <b>${esc(v.followDate)}</b></div>`:''}
+  <div class="sig"><div>قائد المدرسة<br><br>${esc(s.principal||'')}<br>التوقيع: ............</div><div>${visitorTitle(v)}<br><br>${esc(v.visitorName||set('supName'))}<br>التوقيع: ............</div></div>`);
+}
+function printSchool(sc){
+  const s=DB.schools.find(x=>x.id===sc)||{}, c=composite(sc), G=gapsFor(sc), combos=nafsCombos();
+  doPrint(prHead('تقرير أداء مدرسة')+`<table><tr><th>المدرسة</th><td>${esc(s.name)}</td><th>الرقم الوزاري</th><td>${esc(s.ministryNo)}</td></tr><tr><th>قائد المدرسة</th><td>${esc(s.principal)}</td><th>عدد الطلاب</th><td>${esc(s.students)}</td></tr></table>
+  <div class="sec">المؤشر المركب</div><table><tr><th>المكوّن</th><th>المدرسة</th><th>متوسط المدارس</th><th>الوزن</th></tr>
+  <tr><td>الزيارات الإشرافية</td><td>${f0(visitScore(sc))}</td><td>${f0(meanOf(visitScore))}</td><td>${set('wVisit')}%</td></tr><tr><td>نتائج نافس</td><td>${f0(nafsScore(sc))}</td><td>${f0(meanOf(nafsScore))}</td><td>${set('wNafs')}%</td></tr><tr><td>مؤشرات الأداء</td><td>${f0(indScore(sc))}</td><td>${f0(meanOf(indScore))}</td><td>${set('wInd')}%</td></tr>
+  <tr><th>الإجمالي</th><th>${f0(c)} — ${lvl(c).t}</th><th>${f0(meanOf(composite))}</th><th></th></tr></table>
+  <div class="sec">مجالات الزيارة</div><table><tr><th>المجال</th><th>المدرسة</th><th>متوسط المدارس</th></tr>${domains().map(d=>`<tr><td>${esc(d)}</td><td>${f0(domainScore(sc,d))}</td><td>${f0(meanOf(id=>domainScore(id,d)))}</td></tr>`).join('')}</table>
+  ${combos.length?`<div class="sec">نتائج نافس (${nafsYear(sc)||'—'})</div><table><tr><th>المجال</th><th>المدرسة</th><th>متوسط المدارس</th><th>الوطني</th></tr>${combos.map(cb=>{const r=nafsRow(sc,cb.g,cb.s); return r?`<tr><td>${esc(cb.s)} – ${esc(cb.g)}</td><td>${f0(r.score)}</td><td>${f0(meanOf(id=>{const x=nafsRow(id,cb.g,cb.s);return x?x.score:null;}))}</td><td>${f0(r.national)}</td></tr>`:''}).join('')}</table>`:''}
+  <div class="sec">مؤشرات الأداء</div><table><tr><th>المؤشر</th><th>القيمة</th><th>المستهدف</th><th>نسبة التحقق</th></tr>${DB.indDefs.map(d=>{const v=indVal(sc,d.name);return `<tr><td>${esc(d.name)}</td><td>${f0(v)}${esc(d.unit)}</td><td>${f0(d.target)}${esc(d.unit)}</td><td>${f0(ach(d,v))}%</td></tr>`;}).join('')}</table>
+  <div class="sec">أولويات التحسين</div><table><tr><th>المجال</th><th>القيمة</th><th>الفجوة عن المتوسط</th><th>الإجراء المقترح</th></tr>${G.map(g=>`<tr><td>${esc(g.dm.label)}</td><td>${f0(g.v)}</td><td>${f0(g.gm)}</td><td>${recFor(g)}</td></tr>`).join('')||'<tr><td colspan="4">لا توجد فجوات</td></tr>'}</table>
+  <div class="sig"><div>قائد المدرسة<br><br>${esc(s.principal||'')}</div><div>${esc(set('supTitle'))}<br><br>${esc(set('supName'))}</div></div>`);
+}
+
+/* ===== الإعدادات ===== */
+function settingsV(){
+  if(!isAdmin()) return `<div class="card"><h2>حسابي</h2><div>${esc(ME.name)} — ${ROLES[ME.role]}</div><div class="muted">المدارس المسندة: ${DB.schools.map(s=>esc(s.name)).join('، ')||'—'}</div>
+   <label class="f">${FB?'كلمة مرور جديدة':'رمز دخول جديد'}</label><input class="i" id="myPin" type="password"><button class="btn" style="margin-top:10px" onclick="saveMyPin()">تغيير الرمز</button></div>
+   <button class="btn o" onclick="logout()">تسجيل الخروج</button>`;
+  const F=[['appTitle','عنوان المنصة'],['supName','اسم المشرف'],['supTitle','الصفة'],['region','الإدارة العامة'],['office','مكتب التعليم'],['year','العام الدراسي الحالي'],['wVisit','وزن الزيارات %'],['wNafs','وزن نافس %'],['wInd','وزن المؤشرات %'],['gapThr','حد الفجوة (نقاط)'],['target','المستهدف العام %'],['visitTarget','الزيارات المستهدفة لكل مدرسة']];
+  return `<div class="card"><h2>بيانات المنصة</h2><div class="fg">${F.map(([k,t])=>`<div class="${['appTitle','region'].includes(k)?'full':''}"><label class="f">${t}</label><input class="i" id="s_${k}" value="${esc(set(k))}"></div>`).join('')}
+  <div class="full"><label class="f">${FB?'كلمة مرور جديدة لحسابك':'رمز دخول مشرف القيادة الرئيسي — جديد'} (اتركه فارغاً للإبقاء)</label><input class="i" id="s_pin" type="password" ${FB?'':'inputmode="numeric"'}></div></div>
+  <button class="btn" style="margin-top:10px" onclick="saveSettings()">حفظ الإعدادات</button></div>
+  <div class="card"><div class="row"><h2 class="sp" style="margin:0">المدارس (${DB.schools.length})</h2><button class="btn sm" onclick="schoolForm()">+ مدرسة</button></div>
+  <div class="list" style="margin-top:10px">${DB.schools.map(s=>`<div class="it" onclick="schoolForm('${s.id}')"><div class="t1">${esc(s.name)}</div><div class="t2">${esc(s.ministryNo)} • ${esc(s.principal)} • ${esc(s.district)}</div></div>`).join('')||'<div class="empty">لا توجد مدارس</div>'}</div></div>
+  <div class="card"><div class="row"><h2 class="sp" style="margin:0">المستخدمون (${DB.users.length})</h2><button class="btn sm" onclick="userForm()">+ مستخدم</button></div>
+  <div class="muted" style="margin-top:6px">كل مستخدم يدخل برمزه الخاص على نفس رابط المنصة. المشرف الزائر يرى مدارسه المسندة فقط.</div>
+  <div class="list" style="margin-top:10px">${DB.users.map(u=>`<div class="it" onclick="userForm('${u.id}')"><div class="row"><div class="t1 sp">${esc(u.name)}</div><span class="badge ${u.role==='admin'?'l4':'l3'}">${ROLES[u.role]||u.role}</span>${u.active==='لا'?'<span class="badge na">موقوف</span>':''}</div><div class="t2">${u.schools==='*'?'كل المدارس':String(u.schools||'').split(',').filter(Boolean).map(i=>esc(sName(i.trim()))).join('، ')||'لم تُسند مدارس'}</div></div>`).join('')||'<div class="empty">لا يوجد مستخدمون</div>'}</div></div>
+  <div class="card"><h2>بنود بطاقة الزيارة</h2><div class="muted">سطر لكل بند بالصيغة: المجال | البند</div><textarea class="i" id="itemsTx" style="min-height:220px;font-size:13px">${esc(DB.items.map(x=>x.domain+' | '+x.item).join('\n'))}</textarea><button class="btn sm" style="margin-top:8px" onclick="saveItems()">حفظ البنود</button></div>
+  <div class="card"><h2>تعريف المؤشرات</h2><div class="muted">سطر لكل مؤشر: الاسم | المستهدف | أعلى أو أقل | الوحدة | الوزن</div><textarea class="i" id="defsTx" style="min-height:170px;font-size:13px">${esc(DB.indDefs.map(d=>[d.name,d.target,d.dir,d.unit,d.weight].join(' | ')).join('\n'))}</textarea><button class="btn sm" style="margin-top:8px" onclick="saveDefs()">حفظ المؤشرات</button></div>
+  <div class="card"><h2>البيانات التجريبية</h2><div class="row"><button class="btn sm o" onclick="loadDemo()">تحميل بيانات تجريبية</button><button class="btn sm red" onclick="if(confirm('حذف كل البيانات التجريبية؟'))run([{op:'clearDemo'}],'تم حذف البيانات التجريبية')">حذف البيانات التجريبية</button></div></div>
+  <div class="row"><button class="btn o" onclick="logout()">تسجيل الخروج</button></div>`;
+}
+function saveSettings(){ const o={}; ['appTitle','supName','supTitle','region','office','year','wVisit','wNafs','wInd','gapThr','target','visitTarget'].forEach(k=>o[k]=$('#s_'+k).value.trim()); const np=$('#s_pin').value.trim(); if(np){ if(np.length<MINPW) return toast('كلمة المرور '+MINPW+' خانات على الأقل'); o.pin=np; }
+  run([{op:'settings',obj:o}],'تم حفظ الإعدادات').then(ok=>{ if(ok&&np){ PIN=np; try{localStorage.setItem('supPin',np)}catch(e){} } S.year=o.year; render(); }); }
+function saveMyPin(){ const np=$('#myPin').value.trim(); if(np.length<MINPW) return toast('الرمز '+MINPW+' خانات على الأقل');
+  run([{op:'myPin',pin:np}],'تم تغيير الرمز').then(ok=>{ if(ok){ PIN=np; try{localStorage.setItem('supPin',np)}catch(e){} } }); }
+function userForm(id){
+  const u = id ? DB.users.find(x=>x.id===id) : {id:uid(),name:'',role:'visitor',pin:String(FB?100000+Math.floor(Math.random()*900000):1000+Math.floor(Math.random()*9000)),schools:'',phone:'',active:'نعم'};
+  const sel = new Set(String(u.schools||'').split(',').map(x=>x.trim()));
+  openModal(head(id?'تعديل مستخدم':'مستخدم جديد')+`<div class="fg"><div class="full"><label class="f">الاسم</label><input class="i" id="u_name" value="${esc(u.name)}"></div>
+  <div><label class="f">الدور</label><select class="i" id="u_role">${Object.keys(ROLES).map(k=>`<option value="${k}" ${u.role===k?'selected':''}>${ROLES[k]}</option>`).join('')}</select></div>
+  ${FB?`<div><label class="f">الجوال (اسم المستخدم)</label><input class="i" id="u_phone" value="${esc(u.phone)}" inputmode="tel" ${id?'disabled':''}></div>
+  <div><label class="f">كلمة المرور</label><input class="i" id="u_pin" value="${id?'':esc(u.pin)}" ${id?'disabled placeholder="لا تُعرض — يغيّرها المشرف من حسابه"':''}></div>`
+  :`<div><label class="f">رمز الدخول</label><input class="i" id="u_pin" value="${esc(u.pin)}" inputmode="numeric"></div>
+  <div><label class="f">الجوال</label><input class="i" id="u_phone" value="${esc(u.phone)}"></div>`}
+  <div><label class="f">الحالة</label><select class="i" id="u_act"><option ${u.active!=='لا'?'selected':''}>نعم</option><option value="لا" ${u.active==='لا'?'selected':''}>موقوف</option></select></div></div>
+  <label class="f">المدارس المسندة <a style="cursor:pointer;color:var(--g)" onclick="document.querySelectorAll('.uS').forEach(c=>c.checked=true)">(تحديد الكل)</a></label>
+  <div class="card" style="max-height:260px;overflow:auto">${DB.schools.map(s=>`<label style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--line)"><input type="checkbox" class="uS" value="${s.id}" ${u.schools==='*'||sel.has(s.id)?'checked':''}>${esc(s.name)}</label>`).join('')||'<div class="muted">أضف المدارس أولاً</div>'}</div>
+  <div class="row" style="margin-top:12px"><button class="btn" onclick="saveUser('${u.id}',${id?'true':'false'})">حفظ</button>${id?`<a class="btn o" style="text-decoration:none" target="_blank" href="${userWa(u)}">إرسال بيانات الدخول</a><span class="sp"></span><button class="btn red" onclick="delUser('${u.id}')">حذف</button>`:''}</div>`);
+}
+function userWa(u){ let ph=String(u.phone||'').replace(/\D/g,''); if(ph.startsWith('05')) ph='966'+ph.slice(1); if(!/^9665\d{8}$/.test(ph)) ph='';
+  const t=`السلام عليكم ${u.name}\nتم إنشاء حسابك في ${set('appTitle')}\nالرابط: ${APP_URL||(location.protocol==='https:'&&!location.host.includes('googleusercontent')?location.href.split('#')[0]:'(رابط المنصة)')}${FB?`\nاسم المستخدم: ${u.phone}${u.pin?`\nكلمة المرور: ${u.pin}`:''}\nيمكنك تغيير كلمة المرور من صفحة «حسابي».`:`\nرمز الدخول: ${u.pin}`}`; return 'https://wa.me/'+(ph||'')+'?text='+encodeURIComponent(t); }
+function saveUser(id, exists){ const ch=[...document.querySelectorAll('.uS:checked')].map(c=>c.value);
+  const o={id,name:$('#u_name').value.trim(),role:$('#u_role').value,pin:$('#u_pin').value.trim(),phone:$('#u_phone').value.trim(),active:$('#u_act').value,schools:$('#u_role').value==='admin'?'*':ch.join(',')};
+  if(!o.name) return toast('اكتب الاسم');
+  if(id===ME.id){ o.role='admin'; o.active='نعم'; o.schools='*'; }
+  if(FB){ if(exists){ const old=DB.users.find(x=>x.id===id); o.phone=old.phone; delete o.pin; }
+    else { if(!/^05\d{8}$/.test(o.phone.replace(/\D/g,'').replace(/^9665/,'05'))) return toast('اكتب رقم جوال صحيح 05xxxxxxxx'); if(o.pin.length<6) return toast('كلمة المرور 6 خانات على الأقل'); }
+    const pw=o.pin; return run([{op:'upsert',t:'users',obj:o}],'تم حفظ المستخدم').then(ok=>{ if(ok){ if(!exists){ const nu=DB.users.find(x=>x.phone===o.phone)||o; userForm(nu.id); setTimeout(()=>{ const a=document.querySelector('a[href^="https://wa.me"]'); if(a) a.href=userWa(Object.assign({},nu,{pin:pw})); },50); toast('تم إنشاء الحساب — أرسل له بيانات الدخول'); } else closeModal(); } }); }
+  if(o.pin.length<4) return toast('الرمز 4 خانات على الأقل');
+  if(DB.users.some(x=>x.id!==id&&String(x.pin)===o.pin)) return toast('الرمز مستخدم لمستخدم آخر');
+  run([{op:'upsert',t:'users',obj:o}],'تم حفظ المستخدم').then(ok=>ok&&closeModal()); }
+function delUser(id){ if(id===ME.id) return toast('لا يمكنك حذف حسابك'); if(confirm('حذف المستخدم؟ (تبقى زياراته محفوظة)')) run([{op:'remove',t:'users',id}],'تم الحذف').then(closeModal); }
+function saveItems(){ const rows=$('#itemsTx').value.split('\n').map(l=>l.split('|').map(x=>x.trim())).filter(a=>a.length>=2&&a[0]&&a[1]).map(a=>({domain:a[0],item:a.slice(1).join(' - ')})); if(!rows.length) return toast('لا توجد بنود'); run([{op:'setList',t:'items',rows}],'تم حفظ البنود'); }
+function saveDefs(){ const rows=$('#defsTx').value.split('\n').map(l=>l.split('|').map(x=>x.trim())).filter(a=>a[0]).map(a=>({name:a[0],target:a[1]||'100',dir:(a[2]||'').includes('أقل')?'أقل':'أعلى',unit:a[3]||'%',weight:a[4]||'1'})); run([{op:'setList',t:'indDefs',rows}],'تم حفظ المؤشرات'); }
+function schoolForm(id){
+  const s = id ? DB.schools.find(x=>x.id===id) : {id:uid(),name:'',ministryNo:'',stage:'ابتدائي',principal:'',phone:'',students:'',district:''};
+  const F=[['name','اسم المدرسة','full'],['ministryNo','الرقم الوزاري',''],['stage','المرحلة',''],['principal','قائد المدرسة',''],['phone','الجوال',''],['students','عدد الطلاب',''],['district','الحي / القطاع','']];
+  openModal(head(id?'تعديل مدرسة':'إضافة مدرسة')+`<div class="fg">${F.map(([k,t,c])=>`<div class="${c}"><label class="f">${t}</label><input class="i" id="sc_${k}" value="${esc(s[k])}"></div>`).join('')}</div>
+  <div class="row" style="margin-top:12px"><button class="btn" onclick="saveSchool('${s.id}')">حفظ</button>${id?`<span class="sp"></span><button class="btn red" onclick="delSchool('${s.id}')">حذف المدرسة وبياناتها</button>`:''}</div>`);
+}
+function saveSchool(id){ const o={id}; ['name','ministryNo','stage','principal','phone','students','district'].forEach(k=>o[k]=$('#sc_'+k).value.trim()); if(!o.name) return toast('اكتب اسم المدرسة'); run([{op:'upsert',t:'schools',obj:o}],'تم الحفظ').then(ok=>ok&&closeModal()); }
+function delSchool(id){ if(!confirm('سيتم حذف المدرسة وجميع زياراتها وملاحظاتها ونتائجها. متابعة؟')) return;
+  run([{op:'remove',t:'schools',id},...['visits','notes','nafs','indVals'].map(t=>({op:'removeWhere',t,match:{schoolId:id}}))],'تم الحذف').then(closeModal); }
+
+if(!FB) loginView(); else $('#app').innerHTML='<div class="login"><div class="spin"></div></div>';
+</script>
+<script type="module">
+/* ===== طبقة الربط مع Firebase (Auth + Firestore) ===== */
+if (FB_CONFIG) {
+  const V = '10.12.2', base = `https://www.gstatic.com/firebasejs/${V}/`;
+  const { initializeApp, deleteApp } = await import(base + 'firebase-app.js');
+  const A = await import(base + 'firebase-auth.js');
+  const F = await import(base + 'firebase-firestore.js');
+  const app = initializeApp(FB_CONFIG);
+  const auth = A.getAuth(app);
+  const db = F.getFirestore(app);
+  const COLS = ['schools', 'visits', 'notes', 'nafs', 'indVals'];
+  let RAW = null, U = null;
+
+  const normPhone = p => { let d = String(p || '').replace(/[٠-٩]/g, x => '٠١٢٣٤٥٦٧٨٩'.indexOf(x)).replace(/\D/g, ''); if (d.startsWith('966')) d = '0' + d.slice(3); if (d.length === 9 && d.startsWith('5')) d = '0' + d; return d; };
+  const email = p => normPhone(p) + '@sup-platform.app';
+  const clean = o => JSON.parse(JSON.stringify(o));
+  const ref = (c, id) => F.doc(db, c, String(id));
+
+  async function profile(uid) { const s = await F.getDoc(ref('users', uid)); return s.exists() ? { ...s.data(), id: uid } : null; }
+
+  function defaultsCfg() {
+    const st = { ...DEFAULTS.settings }; delete st.pin;
+    return { settings: st, items: DEFAULTS.items.map(r => ({ domain: r[0], item: r[1] })), indDefs: DEFAULTS.indDefs.map(r => ({ name: r[0], target: r[1], dir: r[2], unit: r[3], weight: r[4] })) };
+  }
+  const all = async c => (await F.getDocs(F.collection(db, c))).docs.map(d => ({ ...d.data(), id: d.id }));
+
+  async function loadAll() {
+    const cs = await F.getDoc(ref('config', 'main'));
+    let cfg = cs.exists() ? cs.data() : null;
+    if (!cfg) { cfg = defaultsCfg(); if (U.role === 'admin') await F.setDoc(ref('config', 'main'), cfg); }
+    const D = { settings: cfg.settings || {}, items: cfg.items || [], indDefs: cfg.indDefs || [], users: [] };
+    if (U.role === 'admin') {
+      const r = await Promise.all(COLS.map(all)); COLS.forEach((c, i) => D[c] = r[i]);
+      D.users = await all('users');
+    } else {
+      const ids = (U.schoolIds || []).filter(Boolean);
+      D.schools = (await Promise.all(ids.map(id => F.getDoc(ref('schools', id))))).filter(s => s.exists()).map(s => ({ ...s.data(), id: s.id }));
+      for (const c of COLS.slice(1)) {
+        const parts = await Promise.all(ids.map(id => F.getDocs(F.query(F.collection(db, c), F.where('schoolId', '==', id)))));
+        D[c] = parts.flatMap(q => q.docs.map(d => ({ ...d.data(), id: d.id })));
+      }
+    }
+    RAW = D; return view();
+  }
+  function view() { const c = clean(RAW); c.me = { id: U.id, name: U.name, role: U.role }; return c; }
+
+  async function afterAuth() {
+    const pr = await profile(auth.currentUser.uid);
+    if (!pr || pr.active === 'لا') { await A.signOut(auth); throw new Error('الحساب غير مفعّل أو محذوف — تواصل مع مشرف القيادة'); }
+    U = pr; return { db: await loadAll() };
+  }
+
+  async function createAccount(phone, pw) {
+    const sec = initializeApp(FB_CONFIG, 'sec' + Date.now());
+    try { const sa = A.getAuth(sec); const cr = await A.createUserWithEmailAndPassword(sa, email(phone), pw); await A.signOut(sa); return cr.user.uid; }
+    finally { await deleteApp(sec); }
+  }
+
+  async function applyRemote(ops) {
+    let b = F.writeBatch(db), n = 0;
+    const step = async () => { if (++n >= 450) { await b.commit(); b = F.writeBatch(db); n = 0; } };
+    const matchRows = (t, m) => (RAW[t] || []).filter(x => Object.keys(m).every(k => String(x[k]) === String(m[k])));
+    for (const o of ops) {
+      if (o.op === 'myPin') { await A.updatePassword(auth.currentUser, o.pin); continue; }
+      if (o.op === 'settings') {
+        const { pin, ...rest } = o.obj;
+        if (pin) await A.updatePassword(auth.currentUser, pin);
+        delete o.obj.pin;
+        b.set(ref('config', 'main'), { settings: clean({ ...RAW.settings, ...rest }) }, { merge: true }); await step(); continue;
+      }
+      if (o.op === 'setList') { b.set(ref('config', 'main'), { [o.t]: clean(o.rows) }, { merge: true }); await step(); continue; }
+      if (o.op === 'clearDemo') {
+        for (const c of COLS.concat('users')) for (const x of (RAW[c] || [])) if (String(x.id).startsWith('demo') || String(x.schoolId || '').startsWith('demo')) { b.delete(ref(c, x.id)); await step(); }
+        continue;
+      }
+      if (o.op === 'upsert' && o.t === 'users') {
+        const ex = RAW.users.find(x => x.id === o.obj.id);
+        if (!ex) { o.obj.id = await createAccount(o.obj.phone, o.obj.pin); o.obj.phone = normPhone(o.obj.phone); }
+        delete o.obj.pin;
+        const data = { name: o.obj.name, role: o.obj.role, phone: o.obj.phone || (ex && ex.phone) || '', active: o.obj.active || 'نعم',
+          schools: o.obj.role === 'admin' ? '*' : String(o.obj.schools || ''), schoolIds: o.obj.role === 'admin' ? [] : String(o.obj.schools || '').split(',').map(x => x.trim()).filter(Boolean) };
+        Object.assign(o.obj, data);
+        b.set(ref('users', o.obj.id), data); await step(); continue;
+      }
+      if (o.op === 'upsert') { const d = clean(o.obj); delete d.id; b.set(ref(o.t, o.obj.id), d); await step(); }
+      else if (o.op === 'remove') { b.delete(ref(o.t, o.id)); await step(); }
+      else if (o.op === 'removeWhere') { for (const x of matchRows(o.t, o.match)) { b.delete(ref(o.t, x.id)); await step(); } }
+      else if (o.op === 'replace') {
+        for (const x of matchRows(o.t, o.match)) { b.delete(ref(o.t, x.id)); await step(); }
+        for (const r of (o.rows || [])) { const d = clean(r); delete d.id; b.set(ref(o.t, r.id), d); await step(); }
+      }
+    }
+    if (n) await b.commit();
+  }
+
+  async function call(action, p) {
+    if (action === 'login') { await A.signInWithEmailAndPassword(auth, email(p.phone), p.pw); return afterAuth(); }
+    if (action === 'setupOwner') {
+      const cr = await A.createUserWithEmailAndPassword(auth, email(p.phone), p.pw);
+      const b = F.writeBatch(db);
+      b.set(ref('users', cr.user.uid), { name: p.name, role: 'admin', phone: normPhone(p.phone), active: 'نعم', schools: '*', schoolIds: [] });
+      b.set(ref('config', 'owner'), { uid: cr.user.uid });
+      await b.commit();
+      return afterAuth();
+    }
+    if (action === 'load') return { db: await loadAll() };
+    if (action === 'batch') {
+      const ops = clean(p);
+      if (U.role !== 'admin') ops.forEach(o => { if (o.t === 'visits' && o.op === 'upsert') { o.obj.visitorId = U.id; o.obj.visitorName = U.name; } });
+      await applyRemote(ops);
+      applyOps(RAW, ops, U);
+      return { db: view() };
+    }
+    throw new Error('إجراء غير معروف');
+  }
+
+  window.FBA = {
+    call,
+    signOut: () => A.signOut(auth),
+    ownerExists: async () => (await F.getDoc(ref('config', 'owner'))).exists()
+  };
+
+  let started = false;
+  A.onAuthStateChanged(auth, async u => {
+    if (started) return; started = true;
+    if (!u) return loginView();
+    busy(true);
+    try { const r = await afterAuth(); load(r.db); render(); }
+    catch (e) { toast(fbErr(e)); loginView(); }
+    finally { busy(false); }
+  });
+}
+</script>
+
+</body>
+</html>
